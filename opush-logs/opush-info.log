@@ -1,0 +1,3 @@
+2023-03-28 00:37:56.567 INFO  [SpringApplicationShutdownHook] push.config.ThreadPoolShutdownGracefully:onApplicationEvent  :54   >> 容器关闭前处理线程池优雅关闭开始, 当前要处理的线程池数量为: 37 >>>>>>>>>>>>>>>>
+2023-03-28 00:37:56.695 INFO  [SpringApplicationShutdownHook] oot.web.embedded.tomcat.GracefulShutdown:shutDownGracefully  :53   >> Commencing graceful shutdown. Waiting for active requests to complete
+2023-03-28 00:37:58.051 INFO  [     tomcat-shutdown] oot.web.embedded.tomcat.GracefulShutdown:doShutdown          :78   >> Graceful shutdown complete

@@ -1,0 +1,193 @@
+2023-03-25 17:30:53.080 INFO  [                main] com.lin.opush.OpushApplication          :logStarting         :55   >> Starting OpushApplication using Java 1.8.0_241 on LAPTOP-UHQKKGQO with PID 22720 (C:\Users\a\Desktop\Opush\opush-web\target\classes started by a in C:\Users\a\Desktop\Opush)
+2023-03-25 17:30:53.102 INFO  [                main] com.lin.opush.OpushApplication          :ogStartupProfileInfo:637  >> The following 1 profile is active: "dev"
+2023-03-25 17:30:56.440 INFO  [                main] y.config.RepositoryConfigurationDelegate:ltipleStoresDetected:262  >> Multiple Spring Data modules found, entering strict repository configuration mode
+2023-03-25 17:30:56.442 INFO  [                main] y.config.RepositoryConfigurationDelegate:gisterRepositoriesIn:132  >> Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2023-03-25 17:30:56.822 INFO  [                main] y.config.RepositoryConfigurationDelegate:gisterRepositoriesIn:201  >> Finished Spring Data repository scanning in 362 ms. Found 4 JPA repository interfaces.
+2023-03-25 17:30:56.854 INFO  [                main] y.config.RepositoryConfigurationDelegate:ltipleStoresDetected:262  >> Multiple Spring Data modules found, entering strict repository configuration mode
+2023-03-25 17:30:56.858 INFO  [                main] y.config.RepositoryConfigurationDelegate:gisterRepositoriesIn:132  >> Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2023-03-25 17:30:56.977 INFO  [                main] .RepositoryConfigurationExtensionSupport:tRepositoryCandidate:349  >> Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.lin.opush.dao.ChannelAccountDao; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2023-03-25 17:30:56.978 INFO  [                main] .RepositoryConfigurationExtensionSupport:tRepositoryCandidate:349  >> Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.lin.opush.dao.MessageTemplateDao; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2023-03-25 17:30:56.980 INFO  [                main] .RepositoryConfigurationExtensionSupport:tRepositoryCandidate:349  >> Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.lin.opush.dao.SmsRecordDao; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2023-03-25 17:30:56.981 INFO  [                main] .RepositoryConfigurationExtensionSupport:tRepositoryCandidate:349  >> Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.lin.opush.dao.UserDao; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2023-03-25 17:30:56.981 INFO  [                main] y.config.RepositoryConfigurationDelegate:gisterRepositoriesIn:201  >> Finished Spring Data repository scanning in 98 ms. Found 0 Redis repository interfaces.
+2023-03-25 17:30:57.570 INFO  [                main] trationDelegate$BeanPostProcessorChecker:sAfterInitialization:376  >> Bean 'groupIdEnhancer' of type [com.lin.opush.receiver.kafka.StartKafkaReceiver$$Lambda$470/903218049] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2023-03-25 17:30:57.926 INFO  [                main] trationDelegate$BeanPostProcessorChecker:sAfterInitialization:376  >> Bean 'com.dtp.starter.common.autoconfigure.BaseBeanAutoConfiguration' of type [com.dtp.starter.common.autoconfigure.BaseBeanAutoConfiguration$$EnhancerBySpringCGLIB$$4ecc8108] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2023-03-25 17:30:58.626 INFO  [                main] boot.web.embedded.tomcat.TomcatWebServer:initialize          :108  >> Tomcat initialized with port(s): 8080 (http)
+2023-03-25 17:30:58.653 INFO  [                main] g.apache.coyote.http11.Http11NioProtocol:log                 :173  >> Initializing ProtocolHandler ["http-nio-8080"]
+2023-03-25 17:30:58.656 INFO  [                main] org.apache.catalina.core.StandardService:log                 :173  >> Starting service [Tomcat]
+2023-03-25 17:30:58.657 INFO  [                main] org.apache.catalina.core.StandardEngine :log                 :173  >> Starting Servlet engine: [Apache Tomcat/9.0.70]
+2023-03-25 17:30:59.049 INFO  [                main] e.ContainerBase.[Tomcat].[localhost].[/]:log                 :173  >> Initializing Spring embedded WebApplicationContext
+2023-03-25 17:30:59.049 INFO  [                main] ntext.ServletWebServerApplicationContext:ebApplicationContext:292  >> Root WebApplicationContext: initialization completed in 5374 ms
+2023-03-25 17:30:59.219 INFO  [                main] toconfigure.DruidDataSourceAutoConfigure:dataSource          :56   >> Init DruidDataSource
+2023-03-25 17:31:04.922 INFO  [                main] com.alibaba.druid.pool.DruidDataSource  :init                :998  >> {dataSource-1} inited
+2023-03-25 17:31:05.593 INFO  [                main] rg.hibernate.jpa.internal.util.LogHelper:tenceUnitInformation:31   >> HHH000204: Processing PersistenceUnitInfo [name: default]
+2023-03-25 17:31:05.738 INFO  [                main] org.hibernate.Version                   :logVersion          :44   >> HHH000412: Hibernate ORM core version 5.6.14.Final
+2023-03-25 17:31:06.153 INFO  [                main] org.hibernate.annotations.common.Version:<clinit>            :56   >> HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2023-03-25 17:31:06.487 INFO  [                main] org.hibernate.dialect.Dialect           :<init>              :175  >> HHH000400: Using dialect: org.hibernate.dialect.MySQL8Dialect
+2023-03-25 17:31:07.974 INFO  [                main] a.platform.internal.JtaPlatformInitiator:initiateService     :52   >> HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-03-25 17:31:08.003 INFO  [                main] a.LocalContainerEntityManagerFactoryBean:EntityManagerFactory:437  >> Initialized JPA EntityManagerFactory for persistence unit 'default'
+2023-03-25 17:31:12.971 INFO  [                main] com.dtp.core.support.DtpBannerPrinter   :afterPropertiesSet  :42   >> 
+|  __ \                            (_) |__   __|   
+| |  | |_   _ _ __   __ _ _ __ ___  _  ___| |_ __  
+| |  | | | | | '_ \ / _` | '_ ` _ \| |/ __| | '_ \ 
+| |__| | |_| | | | | (_| | | | | | | | (__| | |_) |
+|_____/ \__, |_| |_|\__,_|_| |_| |_|_|\___|_| .__/ 
+         __/ |                              | |    
+        |___/                               |_|    
+[32m :: Dynamic Thread Pool :: [39;2;0;39m
+2023-03-25 17:31:13.787 INFO  [                main] tuate.endpoint.web.EndpointLinksResolver:<init>              :58   >> Exposing 1 endpoint(s) beneath base path '/actuator'
+2023-03-25 17:31:20.002 INFO  [                main] g.apache.coyote.http11.Http11NioProtocol:log                 :173  >> Starting ProtocolHandler ["http-nio-8080"]
+2023-03-25 17:31:20.501 INFO  [                main] boot.web.embedded.tomcat.TomcatWebServer:start               :220  >> Tomcat started on port(s): 8080 (http) with context path ''
+2023-03-25 17:31:20.549 INFO  [                main] com.lin.opush.OpushApplication          :logStarted          :61   >> Started OpushApplication in 28.662 seconds (JVM running for 31.863)
+2023-03-25 17:31:28.147 INFO  [RMI TCP Connection(5)-169.254.81.109] e.ContainerBase.[Tomcat].[localhost].[/]:log                 :173  >> Initializing Spring DispatcherServlet 'dispatcherServlet'
+2023-03-25 17:31:28.165 INFO  [RMI TCP Connection(5)-169.254.81.109] gframework.web.servlet.DispatcherServlet:initServletBean     :525  >> Initializing Servlet 'dispatcherServlet'
+2023-03-25 17:31:28.187 INFO  [RMI TCP Connection(5)-169.254.81.109] gframework.web.servlet.DispatcherServlet:initServletBean     :547  >> Completed initialization in 12 ms
+2023-03-25 17:38:19.939 INFO  [                main] com.lin.opush.OpushApplication          :logStarting         :55   >> Starting OpushApplication using Java 1.8.0_241 on LAPTOP-UHQKKGQO with PID 21536 (C:\Users\a\Desktop\Opush\opush-web\target\classes started by a in C:\Users\a\Desktop\Opush)
+2023-03-25 17:38:19.962 INFO  [                main] com.lin.opush.OpushApplication          :ogStartupProfileInfo:637  >> The following 1 profile is active: "dev"
+2023-03-25 17:38:24.331 INFO  [                main] y.config.RepositoryConfigurationDelegate:ltipleStoresDetected:262  >> Multiple Spring Data modules found, entering strict repository configuration mode
+2023-03-25 17:38:24.333 INFO  [                main] y.config.RepositoryConfigurationDelegate:gisterRepositoriesIn:132  >> Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2023-03-25 17:38:24.922 INFO  [                main] y.config.RepositoryConfigurationDelegate:gisterRepositoriesIn:201  >> Finished Spring Data repository scanning in 559 ms. Found 4 JPA repository interfaces.
+2023-03-25 17:38:24.972 INFO  [                main] y.config.RepositoryConfigurationDelegate:ltipleStoresDetected:262  >> Multiple Spring Data modules found, entering strict repository configuration mode
+2023-03-25 17:38:24.981 INFO  [                main] y.config.RepositoryConfigurationDelegate:gisterRepositoriesIn:132  >> Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2023-03-25 17:38:25.192 INFO  [                main] .RepositoryConfigurationExtensionSupport:tRepositoryCandidate:349  >> Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.lin.opush.dao.ChannelAccountDao; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2023-03-25 17:38:25.195 INFO  [                main] .RepositoryConfigurationExtensionSupport:tRepositoryCandidate:349  >> Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.lin.opush.dao.MessageTemplateDao; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2023-03-25 17:38:25.196 INFO  [                main] .RepositoryConfigurationExtensionSupport:tRepositoryCandidate:349  >> Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.lin.opush.dao.SmsRecordDao; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2023-03-25 17:38:25.199 INFO  [                main] .RepositoryConfigurationExtensionSupport:tRepositoryCandidate:349  >> Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.lin.opush.dao.UserDao; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2023-03-25 17:38:25.200 INFO  [                main] y.config.RepositoryConfigurationDelegate:gisterRepositoriesIn:201  >> Finished Spring Data repository scanning in 176 ms. Found 0 Redis repository interfaces.
+2023-03-25 17:38:26.131 INFO  [                main] trationDelegate$BeanPostProcessorChecker:sAfterInitialization:376  >> Bean 'groupIdEnhancer' of type [com.lin.opush.receiver.kafka.StartKafkaReceiver$$Lambda$470/253988431] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2023-03-25 17:38:26.664 INFO  [                main] trationDelegate$BeanPostProcessorChecker:sAfterInitialization:376  >> Bean 'com.dtp.starter.common.autoconfigure.BaseBeanAutoConfiguration' of type [com.dtp.starter.common.autoconfigure.BaseBeanAutoConfiguration$$EnhancerBySpringCGLIB$$786432a2] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2023-03-25 17:38:27.603 INFO  [                main] boot.web.embedded.tomcat.TomcatWebServer:initialize          :108  >> Tomcat initialized with port(s): 8080 (http)
+2023-03-25 17:38:27.633 INFO  [                main] g.apache.coyote.http11.Http11NioProtocol:log                 :173  >> Initializing ProtocolHandler ["http-nio-8080"]
+2023-03-25 17:38:27.635 INFO  [                main] org.apache.catalina.core.StandardService:log                 :173  >> Starting service [Tomcat]
+2023-03-25 17:38:27.636 INFO  [                main] org.apache.catalina.core.StandardEngine :log                 :173  >> Starting Servlet engine: [Apache Tomcat/9.0.70]
+2023-03-25 17:38:28.197 INFO  [                main] e.ContainerBase.[Tomcat].[localhost].[/]:log                 :173  >> Initializing Spring embedded WebApplicationContext
+2023-03-25 17:38:28.197 INFO  [                main] ntext.ServletWebServerApplicationContext:ebApplicationContext:292  >> Root WebApplicationContext: initialization completed in 7267 ms
+2023-03-25 17:38:28.408 INFO  [                main] toconfigure.DruidDataSourceAutoConfigure:dataSource          :56   >> Init DruidDataSource
+2023-03-25 17:38:34.104 INFO  [                main] com.alibaba.druid.pool.DruidDataSource  :init                :998  >> {dataSource-1} inited
+2023-03-25 17:38:34.659 INFO  [                main] rg.hibernate.jpa.internal.util.LogHelper:tenceUnitInformation:31   >> HHH000204: Processing PersistenceUnitInfo [name: default]
+2023-03-25 17:38:34.803 INFO  [                main] org.hibernate.Version                   :logVersion          :44   >> HHH000412: Hibernate ORM core version 5.6.14.Final
+2023-03-25 17:38:35.158 INFO  [                main] org.hibernate.annotations.common.Version:<clinit>            :56   >> HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2023-03-25 17:38:35.471 INFO  [                main] org.hibernate.dialect.Dialect           :<init>              :175  >> HHH000400: Using dialect: org.hibernate.dialect.MySQL8Dialect
+2023-03-25 17:38:36.764 INFO  [                main] a.platform.internal.JtaPlatformInitiator:initiateService     :52   >> HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-03-25 17:38:36.792 INFO  [                main] a.LocalContainerEntityManagerFactoryBean:EntityManagerFactory:437  >> Initialized JPA EntityManagerFactory for persistence unit 'default'
+2023-03-25 17:38:45.306 INFO  [                main] com.dtp.core.support.DtpBannerPrinter   :afterPropertiesSet  :42   >> 
+|  __ \                            (_) |__   __|   
+| |  | |_   _ _ __   __ _ _ __ ___  _  ___| |_ __  
+| |  | | | | | '_ \ / _` | '_ ` _ \| |/ __| | '_ \ 
+| |__| | |_| | | | | (_| | | | | | | | (__| | |_) |
+|_____/ \__, |_| |_|\__,_|_| |_| |_|_|\___|_| .__/ 
+         __/ |                              | |    
+        |___/                               |_|    
+[32m :: Dynamic Thread Pool :: [39;2;0;39m
+2023-03-25 17:38:46.750 INFO  [                main] tuate.endpoint.web.EndpointLinksResolver:<init>              :58   >> Exposing 1 endpoint(s) beneath base path '/actuator'
+2023-03-25 17:38:50.811 INFO  [                main] g.apache.coyote.http11.Http11NioProtocol:log                 :173  >> Starting ProtocolHandler ["http-nio-8080"]
+2023-03-25 17:38:50.873 INFO  [                main] boot.web.embedded.tomcat.TomcatWebServer:start               :220  >> Tomcat started on port(s): 8080 (http) with context path ''
+2023-03-25 17:38:50.903 INFO  [                main] com.lin.opush.OpushApplication          :logStarted          :61   >> Started OpushApplication in 32.982 seconds (JVM running for 38.753)
+2023-03-25 17:38:51.588 INFO  [RMI TCP Connection(1)-169.254.81.109] e.ContainerBase.[Tomcat].[localhost].[/]:log                 :173  >> Initializing Spring DispatcherServlet 'dispatcherServlet'
+2023-03-25 17:38:51.589 INFO  [RMI TCP Connection(1)-169.254.81.109] gframework.web.servlet.DispatcherServlet:initServletBean     :525  >> Initializing Servlet 'dispatcherServlet'
+2023-03-25 17:38:51.602 INFO  [RMI TCP Connection(1)-169.254.81.109] gframework.web.servlet.DispatcherServlet:initServletBean     :547  >> Completed initialization in 12 ms
+2023-03-25 17:42:17.519 INFO  [SpringApplicationShutdownHook] push.config.ThreadPoolShutdownGracefully:onApplicationEvent  :54   >> 容器关闭前处理线程池优雅关闭开始, 当前要处理的线程池数量为: 36 >>>>>>>>>>>>>>>>
+2023-03-25 17:42:17.633 INFO  [SpringApplicationShutdownHook] oot.web.embedded.tomcat.GracefulShutdown:shutDownGracefully  :53   >> Commencing graceful shutdown. Waiting for active requests to complete
+2023-03-25 17:42:18.346 INFO  [     tomcat-shutdown] oot.web.embedded.tomcat.GracefulShutdown:doShutdown          :78   >> Graceful shutdown complete
+2023-03-25 17:42:18.838 INFO  [SpringApplicationShutdownHook] com.xxl.job.core.server.EmbedServer     :stop                :117  >> >>>>>>>>>>> xxl-job remoting server destroy success.
+2023-03-25 17:42:18.841 INFO  [xxl-job, executor JobLogFileCleanThread] xl.job.core.thread.JobLogFileCleanThread:run                 :99   >> >>>>>>>>>>> xxl-job, executor JobLogFileCleanThread thread destroy.
+2023-03-25 17:42:18.842 INFO  [xxl-job, executor TriggerCallbackThread] xl.job.core.thread.TriggerCallbackThread:run                 :98   >> >>>>>>>>>>> xxl-job, executor callback thread destroy.
+2023-03-25 17:42:18.843 INFO  [           Thread-58] xl.job.core.thread.TriggerCallbackThread:run                 :128  >> >>>>>>>>>>> xxl-job, executor retry callback thread destroy.
+2023-03-25 17:42:19.033 INFO  [SpringApplicationShutdownHook] a.LocalContainerEntityManagerFactoryBean:destroy             :651  >> Closing JPA EntityManagerFactory for persistence unit 'default'
+2023-03-25 17:42:19.056 INFO  [SpringApplicationShutdownHook] com.alibaba.druid.pool.DruidDataSource  :close               :2071 >> {dataSource-1} closing ...
+2023-03-25 17:42:19.084 INFO  [SpringApplicationShutdownHook] com.alibaba.druid.pool.DruidDataSource  :close               :2144 >> {dataSource-1} closed
+2023-03-25 17:42:27.306 INFO  [                main] com.lin.opush.OpushApplication          :logStarting         :55   >> Starting OpushApplication using Java 1.8.0_241 on LAPTOP-UHQKKGQO with PID 10268 (C:\Users\a\Desktop\Opush\opush-web\target\classes started by a in C:\Users\a\Desktop\Opush)
+2023-03-25 17:42:27.322 INFO  [                main] com.lin.opush.OpushApplication          :ogStartupProfileInfo:637  >> The following 1 profile is active: "dev"
+2023-03-25 17:42:31.142 INFO  [                main] y.config.RepositoryConfigurationDelegate:ltipleStoresDetected:262  >> Multiple Spring Data modules found, entering strict repository configuration mode
+2023-03-25 17:42:31.144 INFO  [                main] y.config.RepositoryConfigurationDelegate:gisterRepositoriesIn:132  >> Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2023-03-25 17:42:31.513 INFO  [                main] y.config.RepositoryConfigurationDelegate:gisterRepositoriesIn:201  >> Finished Spring Data repository scanning in 352 ms. Found 4 JPA repository interfaces.
+2023-03-25 17:42:31.546 INFO  [                main] y.config.RepositoryConfigurationDelegate:ltipleStoresDetected:262  >> Multiple Spring Data modules found, entering strict repository configuration mode
+2023-03-25 17:42:31.550 INFO  [                main] y.config.RepositoryConfigurationDelegate:gisterRepositoriesIn:132  >> Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2023-03-25 17:42:31.673 INFO  [                main] .RepositoryConfigurationExtensionSupport:tRepositoryCandidate:349  >> Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.lin.opush.dao.ChannelAccountDao; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2023-03-25 17:42:31.675 INFO  [                main] .RepositoryConfigurationExtensionSupport:tRepositoryCandidate:349  >> Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.lin.opush.dao.MessageTemplateDao; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2023-03-25 17:42:31.676 INFO  [                main] .RepositoryConfigurationExtensionSupport:tRepositoryCandidate:349  >> Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.lin.opush.dao.SmsRecordDao; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2023-03-25 17:42:31.677 INFO  [                main] .RepositoryConfigurationExtensionSupport:tRepositoryCandidate:349  >> Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.lin.opush.dao.UserDao; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2023-03-25 17:42:31.678 INFO  [                main] y.config.RepositoryConfigurationDelegate:gisterRepositoriesIn:201  >> Finished Spring Data repository scanning in 101 ms. Found 0 Redis repository interfaces.
+2023-03-25 17:42:32.286 INFO  [                main] trationDelegate$BeanPostProcessorChecker:sAfterInitialization:376  >> Bean 'groupIdEnhancer' of type [com.lin.opush.receiver.kafka.StartKafkaReceiver$$Lambda$470/925913781] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2023-03-25 17:42:32.640 INFO  [                main] trationDelegate$BeanPostProcessorChecker:sAfterInitialization:376  >> Bean 'com.dtp.starter.common.autoconfigure.BaseBeanAutoConfiguration' of type [com.dtp.starter.common.autoconfigure.BaseBeanAutoConfiguration$$EnhancerBySpringCGLIB$$464e74fb] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2023-03-25 17:42:33.383 INFO  [                main] boot.web.embedded.tomcat.TomcatWebServer:initialize          :108  >> Tomcat initialized with port(s): 8080 (http)
+2023-03-25 17:42:33.411 INFO  [                main] g.apache.coyote.http11.Http11NioProtocol:log                 :173  >> Initializing ProtocolHandler ["http-nio-8080"]
+2023-03-25 17:42:33.412 INFO  [                main] org.apache.catalina.core.StandardService:log                 :173  >> Starting service [Tomcat]
+2023-03-25 17:42:33.413 INFO  [                main] org.apache.catalina.core.StandardEngine :log                 :173  >> Starting Servlet engine: [Apache Tomcat/9.0.70]
+2023-03-25 17:42:33.848 INFO  [                main] e.ContainerBase.[Tomcat].[localhost].[/]:log                 :173  >> Initializing Spring embedded WebApplicationContext
+2023-03-25 17:42:33.849 INFO  [                main] ntext.ServletWebServerApplicationContext:ebApplicationContext:292  >> Root WebApplicationContext: initialization completed in 5835 ms
+2023-03-25 17:42:34.023 INFO  [                main] toconfigure.DruidDataSourceAutoConfigure:dataSource          :56   >> Init DruidDataSource
+2023-03-25 17:42:39.912 INFO  [                main] com.alibaba.druid.pool.DruidDataSource  :init                :998  >> {dataSource-1} inited
+2023-03-25 17:42:40.472 INFO  [                main] rg.hibernate.jpa.internal.util.LogHelper:tenceUnitInformation:31   >> HHH000204: Processing PersistenceUnitInfo [name: default]
+2023-03-25 17:42:40.618 INFO  [                main] org.hibernate.Version                   :logVersion          :44   >> HHH000412: Hibernate ORM core version 5.6.14.Final
+2023-03-25 17:42:40.951 INFO  [                main] org.hibernate.annotations.common.Version:<clinit>            :56   >> HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2023-03-25 17:42:41.229 INFO  [                main] org.hibernate.dialect.Dialect           :<init>              :175  >> HHH000400: Using dialect: org.hibernate.dialect.MySQL8Dialect
+2023-03-25 17:42:42.511 INFO  [                main] a.platform.internal.JtaPlatformInitiator:initiateService     :52   >> HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-03-25 17:42:42.535 INFO  [                main] a.LocalContainerEntityManagerFactoryBean:EntityManagerFactory:437  >> Initialized JPA EntityManagerFactory for persistence unit 'default'
+2023-03-25 17:42:47.146 INFO  [                main] com.dtp.core.support.DtpBannerPrinter   :afterPropertiesSet  :42   >> 
+|  __ \                            (_) |__   __|   
+| |  | |_   _ _ __   __ _ _ __ ___  _  ___| |_ __  
+| |  | | | | | '_ \ / _` | '_ ` _ \| |/ __| | '_ \ 
+| |__| | |_| | | | | (_| | | | | | | | (__| | |_) |
+|_____/ \__, |_| |_|\__,_|_| |_| |_|_|\___|_| .__/ 
+         __/ |                              | |    
+        |___/                               |_|    
+[32m :: Dynamic Thread Pool :: [39;2;0;39m
+2023-03-25 17:42:48.143 INFO  [                main] tuate.endpoint.web.EndpointLinksResolver:<init>              :58   >> Exposing 1 endpoint(s) beneath base path '/actuator'
+2023-03-25 17:42:49.850 INFO  [           Thread-47] com.xxl.job.core.server.EmbedServer     :run                 :82   >> >>>>>>>>>>> xxl-job remoting server start success, nettype = class com.xxl.job.core.server.EmbedServer, port = 9999
+2023-03-25 17:42:51.302 INFO  [                main] g.apache.coyote.http11.Http11NioProtocol:log                 :173  >> Starting ProtocolHandler ["http-nio-8080"]
+2023-03-25 17:42:51.355 INFO  [                main] boot.web.embedded.tomcat.TomcatWebServer:start               :220  >> Tomcat started on port(s): 8080 (http) with context path ''
+2023-03-25 17:42:51.375 INFO  [                main] com.lin.opush.OpushApplication          :logStarted          :61   >> Started OpushApplication in 25.801 seconds (JVM running for 29.094)
+2023-03-25 17:42:53.194 INFO  [RMI TCP Connection(5)-169.254.81.109] e.ContainerBase.[Tomcat].[localhost].[/]:log                 :173  >> Initializing Spring DispatcherServlet 'dispatcherServlet'
+2023-03-25 17:42:53.202 INFO  [RMI TCP Connection(5)-169.254.81.109] gframework.web.servlet.DispatcherServlet:initServletBean     :525  >> Initializing Servlet 'dispatcherServlet'
+2023-03-25 17:42:53.205 INFO  [RMI TCP Connection(5)-169.254.81.109] gframework.web.servlet.DispatcherServlet:initServletBean     :547  >> Completed initialization in 1 ms
+2023-03-25 17:43:12.031 INFO  [http-nio-8080-exec-4] m.lin.opush.service.impl.UserServiceImpl:sendCode            :73   >> 发送验证码 → 13502683078 : 965591
+2023-03-25 17:43:17.492 INFO  [http-nio-8080-exec-2] m.lin.opush.service.impl.UserServiceImpl:login               :128  >> 用户 13502683078 登录
+2023-03-25 18:42:32.770 INFO  [http-nio-8080-exec-3] m.lin.opush.service.impl.UserServiceImpl:sendCode            :73   >> 发送验证码 → 13502683078 : 608299
+2023-03-25 18:42:45.398 INFO  [http-nio-8080-exec-2] m.lin.opush.service.impl.UserServiceImpl:login               :128  >> 用户 13502683078 登录
+2023-03-25 20:28:13.094 INFO  [lettuce-nioEventLoop-6-2] io.lettuce.core.protocol.CommandHandler :log                 :217  >> null Unexpected exception during request: java.io.IOException: 远程主机强迫关闭了一个现有的连接。
+java.io.IOException: 远程主机强迫关闭了一个现有的连接。
+	at sun.nio.ch.SocketDispatcher.read0(Native Method)
+	at sun.nio.ch.SocketDispatcher.read(SocketDispatcher.java:43)
+	at sun.nio.ch.IOUtil.readIntoNativeBuffer(IOUtil.java:223)
+	at sun.nio.ch.IOUtil.read(IOUtil.java:192)
+	at sun.nio.ch.SocketChannelImpl.read(SocketChannelImpl.java:380)
+	at io.netty.buffer.PooledByteBuf.setBytes(PooledByteBuf.java:259)
+	at io.netty.buffer.AbstractByteBuf.writeBytes(AbstractByteBuf.java:1132)
+	at io.netty.channel.socket.nio.NioSocketChannel.doReadBytes(NioSocketChannel.java:357)
+	at io.netty.channel.nio.AbstractNioByteChannel$NioByteUnsafe.read(AbstractNioByteChannel.java:151)
+	at io.netty.channel.nio.NioEventLoop.processSelectedKey(NioEventLoop.java:788)
+	at io.netty.channel.nio.NioEventLoop.processSelectedKeysOptimized(NioEventLoop.java:724)
+	at io.netty.channel.nio.NioEventLoop.processSelectedKeys(NioEventLoop.java:650)
+	at io.netty.channel.nio.NioEventLoop.run(NioEventLoop.java:562)
+	at io.netty.util.concurrent.SingleThreadEventExecutor$4.run(SingleThreadEventExecutor.java:997)
+	at io.netty.util.internal.ThreadExecutorMap$2.run(ThreadExecutorMap.java:74)
+	at io.netty.util.concurrent.FastThreadLocalRunnable.run(FastThreadLocalRunnable.java:30)
+	at java.lang.Thread.run(Thread.java:748)
+2023-03-25 20:28:13.102 INFO  [lettuce-nioEventLoop-6-1] io.lettuce.core.protocol.CommandHandler :log                 :217  >> null Unexpected exception during request: java.io.IOException: 远程主机强迫关闭了一个现有的连接。
+java.io.IOException: 远程主机强迫关闭了一个现有的连接。
+	at sun.nio.ch.SocketDispatcher.read0(Native Method)
+	at sun.nio.ch.SocketDispatcher.read(SocketDispatcher.java:43)
+	at sun.nio.ch.IOUtil.readIntoNativeBuffer(IOUtil.java:223)
+	at sun.nio.ch.IOUtil.read(IOUtil.java:192)
+	at sun.nio.ch.SocketChannelImpl.read(SocketChannelImpl.java:380)
+	at io.netty.buffer.PooledByteBuf.setBytes(PooledByteBuf.java:259)
+	at io.netty.buffer.AbstractByteBuf.writeBytes(AbstractByteBuf.java:1132)
+	at io.netty.channel.socket.nio.NioSocketChannel.doReadBytes(NioSocketChannel.java:357)
+	at io.netty.channel.nio.AbstractNioByteChannel$NioByteUnsafe.read(AbstractNioByteChannel.java:151)
+	at io.netty.channel.nio.NioEventLoop.processSelectedKey(NioEventLoop.java:788)
+	at io.netty.channel.nio.NioEventLoop.processSelectedKeysOptimized(NioEventLoop.java:724)
+	at io.netty.channel.nio.NioEventLoop.processSelectedKeys(NioEventLoop.java:650)
+	at io.netty.channel.nio.NioEventLoop.run(NioEventLoop.java:562)
+	at io.netty.util.concurrent.SingleThreadEventExecutor$4.run(SingleThreadEventExecutor.java:997)
+	at io.netty.util.internal.ThreadExecutorMap$2.run(ThreadExecutorMap.java:74)
+	at io.netty.util.concurrent.FastThreadLocalRunnable.run(FastThreadLocalRunnable.java:30)
+	at java.lang.Thread.run(Thread.java:748)
+2023-03-25 21:16:10.725 INFO  [lettuce-eventExecutorLoop-1-4] lettuce.core.protocol.ConnectionWatchdog:log                 :171  >> Reconnecting, last destination was /110.40.150.166:6379
+2023-03-25 21:16:10.732 INFO  [lettuce-eventExecutorLoop-1-5] lettuce.core.protocol.ConnectionWatchdog:log                 :171  >> Reconnecting, last destination was /110.40.150.166:6379
+2023-03-25 21:16:11.908 INFO  [Druid-ConnectionPool-Create-2082627733] ibaba.druid.pool.DruidAbstractDataSource:setFailContinuous   :1804 >> {dataSource-1} failContinuous is true
+2023-03-25 21:16:16.943 INFO  [lettuce-eventExecutorLoop-1-3] lettuce.core.protocol.ConnectionWatchdog:log                 :171  >> Reconnecting, last destination was 110.40.150.166:6379
+2023-03-25 21:16:16.943 INFO  [lettuce-eventExecutorLoop-1-2] lettuce.core.protocol.ConnectionWatchdog:log                 :171  >> Reconnecting, last destination was 110.40.150.166:6379
+2023-03-25 21:16:17.120 INFO  [lettuce-nioEventLoop-6-1] ettuce.core.protocol.ReconnectionHandler:lambda$null$3       :174  >> Reconnected to 110.40.150.166:6379
+2023-03-25 21:16:17.518 INFO  [Druid-ConnectionPool-Create-2082627733] ibaba.druid.pool.DruidAbstractDataSource:setFailContinuous   :1809 >> {dataSource-1} failContinuous is false
+2023-03-25 21:16:18.282 INFO  [lettuce-nioEventLoop-6-2] ettuce.core.protocol.ReconnectionHandler:lambda$null$3       :174  >> Reconnected to 110.40.150.166:6379

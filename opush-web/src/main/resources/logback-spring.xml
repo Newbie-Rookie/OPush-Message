@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true" scanPeriod="10 seconds" debug="false">
+    <!-- scan: true时若配置文件发生改变, 将被重新加载 (默认true) -->
+    <!-- scanPeriod: 设置监测配置文件是否有修改的时间间隔 (默认1000, 单位毫秒, 当scan为true时该属性生效) -->
+    <!-- debug: true时将打印出logback内部日志信息 (默认false) -->
+
+    <!-- 上下文名称 (区分不同应用程序的日志记录, 可通过%contextName来打印日志上下文名称) -->
+    <contextName>opush</contextName>
+
+    <!-- 彩色日志渲染类 -->
+    <conversionRule conversionWord="clr"
+                    converterClass="org.springframework.boot.logging.logback.ColorConverter"/>
+    <conversionRule conversionWord="wex"
+                    converterClass="org.springframework.boot.logging.logback.WhitespaceThrowableProxyConverter"/>
+
+    <!-- 集中管理属性 -->
+    <property name="log.path" value="opush-logs"/>
+    <!-- 配置控制台和文件的日志输出格式 (控制台可彩色输出, 而文件中无法彩色输出) -->
+    <property name="console_log_pattern"
+              value="%red(%d{yyyy-MM-dd HH:mm:ss.SSS}) %highlight(%-5level) %green([%20thread]) %boldMagenta(%-40.40logger:%-20.20M:%-4L) >> %gray(%msg%n)"/>
+    <property name="file_log_pattern"
+              value="%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level [%20thread] %-40.40logger:%-20.20M:%-4L >> %msg%n"/>
+    <!-- 编码 -->
+    <property name="charset" value="UTF-8"/>
+
+    <!-- 若logback配置文件名为logback.xml则需要使用下方配置 -->
+    <!--
+        原因：logback.xml早于application.properties加载，所以读取不到opush.grayLog.ip，需使用下方配置进行引用
+    -->
+    <springProperty scope="context" name="grayLogIp" source="opush.grayLog.ip"/>
+    <springProperty scope="context" name="grayLogUdpPort" source="opush.grayLog.udp.port"/>
+
+    <!-- 日志策略 -->
+    <!-- 输出到控制台 -->
+    <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>${console_log_pattern}</pattern>
+            <charset>${charset}</charset>
+        </encoder>
+    </appender>
+
+    <!-- 输出到文件 (记录INFO级别信息) -->
+    <appender name="info_file" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${log.path}/opush-info.log</file>
+        <encoder>
+            <pattern>${file_log_pattern}</pattern>
+            <charset>${charset}</charset>
+        </encoder>
+        <!-- 滚动策略 (按大小+时间滚动记录) -->
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <!-- 按天滚动记录 -->
+            <fileNamePattern>${log.path}/opush-info/opush-info.%d{yyyy-MM-dd}.%i.log.gz</fileNamePattern>
+            <!-- 单文件最大体积 -->
+            <maxFileSize>100MB</maxFileSize>
+            <!-- 日志文件保留天数 -->
+            <maxHistory>15</maxHistory>
+            <!-- 归档日志文件的总内存大小 -->
+            <totalSizeCap>1000MB</totalSizeCap>
+            <!--
+                是否在应用启动时删除历史归档的日志文件 (默认false)
+                <cleanHistoryOnStart>true</cleanHistoryOnStart>
+             -->
+        </rollingPolicy>
+        <!-- 此日志文件只记录info级别的日志 -->
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>info</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <!-- 追加日志 -->
+        <append>true</append>
+    </appender>
+
+    <!--输出到文件 (记录ERROR级别信息) -->
+    <appender name="error_file" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${log.path}/opush-error.log</file>
+        <encoder>
+            <pattern>${file_log_pattern}</pattern>
+            <charset>${charset}</charset>
+        </encoder>
+        <!-- 滚动策略 (按大小+时间滚动记录) -->
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <!-- 按天滚动记录 -->
+            <fileNamePattern>${log.path}/opush-error/opush-error.%d{yyyy-MM-dd}.%i.log.gz</fileNamePattern>
+            <!-- 单文件最大体积 -->
+            <maxFileSize>100MB</maxFileSize>
+            <!-- 日志文件保留天数 -->
+            <maxHistory>15</maxHistory>
+            <!-- 归档日志文件的总内存大小 -->
+            <totalSizeCap>1000MB</totalSizeCap>
+            <!--
+                是否在应用启动时删除历史归档的日志文件 (默认false)
+                <cleanHistoryOnStart>true</cleanHistoryOnStart>
+             -->
+        </rollingPolicy>
+        <!-- 此日志文件只记录error级别的日志 -->
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>error</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <!-- 追加日志 -->
+        <append>true</append>
+    </appender>
+
+    <!--分布式日志框架Graylog：业务监控 + 日志检索-->
+    <appender name="gelf" class="de.siegmar.logbackgelf.GelfUdpAppender">
+        <!-- Graylog服务的IP地址 -->
+        <graylogHost>${grayLogIp}</graylogHost>
+        <!-- UDP Input端口 -->
+        <graylogPort>${grayLogUdpPort}</graylogPort>
+        <!-- 最大GELF数据块大小（单位：字节），508为建议最小值，最大值为65467 -->
+        <maxChunkSize>508</maxChunkSize>
+        <!-- 是否使用压缩 -->
+        <useCompression>true</useCompression>
+        <!-- 格式 -->
+        <encoder class="de.siegmar.logbackgelf.GelfEncoder">
+            <!-- 是否发送原生的日志信息 -->
+            <includeRawMessage>false</includeRawMessage>
+            <includeMarker>true</includeMarker>
+            <includeMdcData>true</includeMdcData>
+            <includeCallerData>false</includeCallerData>
+            <includeRootCauseData>false</includeRootCauseData>
+            <!-- 是否发送日志级别的名称，否则默认以数字代表日志级别 -->
+            <includeLevelName>true</includeLevelName>
+            <shortPatternLayout class="ch.qos.logback.classic.PatternLayout">
+                <pattern>%d - %m%nopex</pattern>
+            </shortPatternLayout>
+            <fullPatternLayout class="ch.qos.logback.classic.PatternLayout">
+                <pattern>%d - [%thread] %-5level %logger{35} - %msg%n</pattern>
+            </fullPatternLayout>
+            <!-- 配置应用名称（服务名称），通过staticField标签可以自定义一些固定的日志字段 -->
+            <staticField>app_name:opush</staticField>
+        </encoder>
+    </appender>
+
+    <!--
+       <root>: 最高级的<logger>, 必有节点, 用于指定最基础的日志输出级别和引用日志策略, 只有一个level属性
+    -->
+    <root level="info">
+        <!-- console打印后面可以只针对dev环境的 -->
+        <appender-ref ref="console"/>
+        <appender-ref ref="info_file"/>
+        <appender-ref ref="error_file"/>
+        <appender-ref ref="gelf"/>
+    </root>
+
+    <!-- 关闭kafka的ProducerConfig和ConsumerConfig日志 -->
+    <!-- <logger name="org.apache.kafka.clients.producer.ProducerConfig" level="off" /> -->
+    <!-- <logger name="org.apache.kafka.clients.consumer.ConsumerConfig" level="off" /> -->
+    <!-- 关闭kafka所有日志 -->
+    <logger name="org.apache.kafka" level="off" />
+    <logger name="org.springframework.kafka" level="off" />
+    <!-- 关闭Kafka连接日志 -->
+    <!-- <logger name="org.apache.kafka.clients.NetworkClient" level="off" /> -->
+
+    <!-- 关闭线程池注册日志 -->
+    <logger name="com.dtp.core.DtpRegistry" level="off" />
+
+
+    <!-- 日志配置的多环境开发 (也可使用多文件形式) -->
+    <!--
+    <springProfile name="dev">
+        &lt;!&ndash; 可以输出项目中的debug日志，包括mybatis的sql日志 &ndash;&gt;
+        <logger name="com.hyh.logback.web" level="DEBUG">
+            <appender-ref ref="console"/>
+        </logger>
+        <root level="INFO">
+            <appender-ref ref="console"/>
+        </root>
+    </springProfile>
+    <springProfile name="pro">
+        &lt;!&ndash;可以输出项目中的debug日志，包括mybatis的sql日志&ndash;&gt;
+        <logger name="com.hyh.logback.web" level="DEBUG">
+            <appender-ref ref="console"/>
+        </logger>
+        <root level="INFO">
+            <appender-ref ref="console"/>
+        </root>
+    </springProfile>
+    <springProfile name="test">
+        &lt;!&ndash;可以输出项目中的debug日志，包括mybatis的sql日志&ndash;&gt;
+        <logger name="com.hyh.logback.web" level="DEBUG">
+            <appender-ref ref="console"/>
+        </logger>
+        <root level="INFO">
+            <appender-ref ref="console"/>
+        </root>
+    </springProfile>
+    -->
+</configuration>

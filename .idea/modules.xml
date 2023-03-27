@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/Opush.iml" filepath="$PROJECT_DIR$/.idea/Opush.iml" />
+      <module fileurl="file://$PROJECT_DIR$/opush-common/opush-common.iml" filepath="$PROJECT_DIR$/opush-common/opush-common.iml" />
+      <module fileurl="file://$PROJECT_DIR$/opush-process/opush-process.iml" filepath="$PROJECT_DIR$/opush-process/opush-process.iml" />
+      <module fileurl="file://$PROJECT_DIR$/opush-service-api/opush-service-api.iml" filepath="$PROJECT_DIR$/opush-service-api/opush-service-api.iml" />
+      <module fileurl="file://$PROJECT_DIR$/opush-service-api-impl/opush-service-api-impl.iml" filepath="$PROJECT_DIR$/opush-service-api-impl/opush-service-api-impl.iml" />
+      <module fileurl="file://$PROJECT_DIR$/opush-support/opush-support.iml" filepath="$PROJECT_DIR$/opush-support/opush-support.iml" />
+      <module fileurl="file://$PROJECT_DIR$/opush-timed/opush-timed.iml" filepath="$PROJECT_DIR$/opush-timed/opush-timed.iml" />
+      <module fileurl="file://$PROJECT_DIR$/opush-web/opush-web.iml" filepath="$PROJECT_DIR$/opush-web/opush-web.iml" />
+    </modules>
+  </component>
+</project>
