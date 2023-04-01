@@ -3,19 +3,26 @@ package com.lin.opush.service.impl;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.date.DatePattern;
 import cn.hutool.core.date.DateUtil;
-
+import cn.hutool.core.map.MapUtil;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
+import com.alibaba.fastjson.JSON;
 import com.lin.opush.constants.CommonConstant;
+import com.lin.opush.constants.OpushConstant;
 import com.lin.opush.dao.MessageTemplateDao;
 import com.lin.opush.dao.SmsRecordDao;
 import com.lin.opush.domain.MessageTemplate;
+import com.lin.opush.domain.SimpleAnchorInfo;
 import com.lin.opush.domain.SmsRecord;
+import com.lin.opush.enums.AnchorState;
+import com.lin.opush.enums.ChannelType;
 import com.lin.opush.service.DataTraceService;
 import com.lin.opush.utils.Convert4Amis;
 import com.lin.opush.utils.RedisUtils;
+import com.lin.opush.utils.TaskInfoUtils;
 import com.lin.opush.vo.DataTraceParam;
-import com.lin.opush.vo.amis.SmsDataVo;
+import com.lin.opush.vo.amis.EchartsDataVo;
+import com.lin.opush.vo.amis.UserDataVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -81,107 +88,118 @@ public class DataTraceServiceImpl implements DataTraceService {
             // 返回与where子句限制相对应的predicates，如果未指定限制，则返回null
             return criteriaQuery.getRestriction();
         }, pageRequest);
-//        // 将分页对象转为短信下发记录列表
-//        List<SmsRecord> smsRecordList = smsRecords.toList();
-//        if (CollUtil.isEmpty(smsRecordList)) {
-//            return SmsDataVo.builder().items(Arrays.asList(SmsDataVo.ItemsVO.builder().build())).build();
-//        }
-//        // 根据手机号+下发批次id分组出入Map<手机号+下发批次id, 短信下发记录列表>
-//        // 将同一条短信下发和短信回执拼装为一条短信记录
-//        Map<String, List<SmsRecord>> maps = smsRecordList.stream().collect(Collectors.groupingBy((o) -> o.getPhone() + o.getSeriesId()));
-//        return Convert4Amis.getSmsDataVo(maps);
     }
 
-//    @Override
-//    public UserTimeLineVo getTraceUserInfo(String receiver) {
-//        List<String> userInfoList = redisUtils.lRange(receiver, 0, -1);
-//        if (CollUtil.isEmpty(userInfoList)) {
-//            return UserTimeLineVo.builder().items(new ArrayList<>()).build();
-//        }
-//
-//        // 0. 按时间排序
-//        List<SimpleAnchorInfo> sortAnchorList = userInfoList.stream().map(s -> JSON.parseObject(s, SimpleAnchorInfo.class)).sorted((o1, o2) -> Math.toIntExact(o1.getTimestamp() - o2.getTimestamp())).collect(Collectors.toList());
-//
-//        // 1. 对相同的businessId进行分类  {"businessId":[{businessId,state,timeStamp},{businessId,state,timeStamp}]}
-//        Map<String, List<SimpleAnchorInfo>> map = MapUtil.newHashMap();
-//        for (SimpleAnchorInfo simpleAnchorInfo : sortAnchorList) {
-//            List<SimpleAnchorInfo> simpleAnchorInfos = map.get(String.valueOf(simpleAnchorInfo.getBusinessId()));
-//            if (CollUtil.isEmpty(simpleAnchorInfos)) {
-//                simpleAnchorInfos = new ArrayList<>();
-//            }
-//            simpleAnchorInfos.add(simpleAnchorInfo);
-//            map.put(String.valueOf(simpleAnchorInfo.getBusinessId()), simpleAnchorInfos);
-//        }
-//
-//        // 2. 封装vo 给到前端渲染展示
-//        List<UserTimeLineVo.ItemsVO> items = new ArrayList<>();
-//        for (Map.Entry<String, List<SimpleAnchorInfo>> entry : map.entrySet()) {
-//            Long messageTemplateId = TaskInfoUtils.getMessageTemplateIdFromBusinessId(Long.valueOf(entry.getKey()));
-//            MessageTemplate messageTemplate = messageTemplateDao.findById(messageTemplateId).orElse(null);
-//            if (Objects.isNull(messageTemplate)) {
-//                continue;
-//            }
-//
-//            StringBuilder sb = new StringBuilder();
-//            for (SimpleAnchorInfo simpleAnchorInfo : entry.getValue()) {
-//                if (AnchorState.RECEIVE.getCode().equals(simpleAnchorInfo.getState())) {
-//                    sb.append(StrPool.CRLF);
-//                }
-//                String startTime = DateUtil.format(new Date(simpleAnchorInfo.getTimestamp()), DatePattern.NORM_DATETIME_PATTERN);
-//                String stateDescription = AnchorState.getDescriptionByCode(simpleAnchorInfo.getState());
-//                sb.append(startTime).append(StrPool.C_COLON).append(stateDescription).append("==>");
-//            }
-//
-//            for (String detail : sb.toString().split(StrPool.CRLF)) {
-//                if (StrUtil.isNotBlank(detail)) {
-//                    UserTimeLineVo.ItemsVO itemsVO = UserTimeLineVo.ItemsVO.builder()
-//                            .businessId(entry.getKey())
-//                            .sendType(ChannelType.getEnumByCode(messageTemplate.getSendChannel()).getDescription())
-//                            .creator(messageTemplate.getCreator())
-//                            .title(messageTemplate.getName())
-//                            .detail(detail)
-//                            .build();
-//                    items.add(itemsVO);
-//                }
-//            }
-//        }
-//        return UserTimeLineVo.builder().items(items).build();
-//    }
-
-//    @Override
-//    public EchartsVo getTraceMessageTemplateInfo(String businessId) {
-//
-//        // 获取businessId并获取模板信息
-//        businessId = getRealBusinessId(businessId);
-//        Optional<MessageTemplate> optional = messageTemplateDao.findById(TaskInfoUtils.getMessageTemplateIdFromBusinessId(Long.valueOf(businessId)));
-//        if (!optional.isPresent()) {
-//            return null;
-//        }
-//
-//        /**
-//         * 获取redis清洗好的数据
-//         * key：state
-//         * value:stateCount
-//         */
-//        Map<Object, Object> anchorResult = redisUtils.hGetAll(getRealBusinessId(businessId));
-//
-//        return Convert4Amis.getEchartsVo(anchorResult, optional.get().getName(), businessId);
-//    }
+    /**
+     * 获取全链路追踪 用户维度信息【Redis中使用List存储】
+     * @param dataTraceParam 数据全链路追踪请求参数
+     * @return 用户链路追踪VO
+     */
+    @Override
+    public UserDataVo getTraceUserInfo(DataTraceParam dataTraceParam) {
+        // Redis key
+        String key = dataTraceParam.getCreator() + CommonConstant.COLON + dataTraceParam.getReceiver();
+        // 获取Redis中指定key的所有数据
+        List<String> simpleAnchorInfoList = redisUtils.lRange(key, 0, -1);
+        if (CollUtil.isEmpty(simpleAnchorInfoList)) {
+            return UserDataVo.builder().items(new ArrayList<>()).build();
+        }
+        // 按时间排序
+        List<SimpleAnchorInfo> sortSimpleAnchorInfoList = simpleAnchorInfoList.stream()
+                .map(simpleAnchorInfo -> JSON.parseObject(simpleAnchorInfo, SimpleAnchorInfo.class))
+                .sorted((o1, o2) -> Math.toIntExact(o1.getLogTimestamp() - o2.getLogTimestamp()))
+                .collect(Collectors.toList());
+        // 对埋点信息中相同的businessId进行分类
+        // {"businessId":[{businessId,state,timeStamp},{businessId,state,timeStamp}]}
+        Map<String, List<SimpleAnchorInfo>> map = MapUtil.newHashMap();
+        for (SimpleAnchorInfo simpleAnchorInfo : sortSimpleAnchorInfoList) {
+            List<SimpleAnchorInfo> simpleAnchorInfos = map.get(String.valueOf(simpleAnchorInfo.getBusinessId()));
+            if (CollUtil.isEmpty(simpleAnchorInfos)) {
+                simpleAnchorInfos = new ArrayList<>();
+            }
+            simpleAnchorInfos.add(simpleAnchorInfo);
+            map.put(String.valueOf(simpleAnchorInfo.getBusinessId()), simpleAnchorInfos);
+        }
+        // 封装vo给到前端渲染展示
+        List<UserDataVo.ItemsVO> items = new ArrayList<>();
+        for (Map.Entry<String, List<SimpleAnchorInfo>> entry : map.entrySet()) {
+            // 从业务id【3 ~ 8位】中切割出消息模板id并获取对应模板信息
+            Long messageTemplateId = TaskInfoUtils.getMessageTemplateIdFromBusinessId(Long.valueOf(entry.getKey()));
+            MessageTemplate messageTemplate = messageTemplateDao.findById(messageTemplateId).orElse(null);
+            if (Objects.isNull(messageTemplate)) {
+                continue;
+            }
+            // 拼接发送细节
+            StringBuilder sb = new StringBuilder();
+            for (SimpleAnchorInfo simpleAnchorInfo : entry.getValue()) {
+                if (AnchorState.RECEIVE.getCode().equals(simpleAnchorInfo.getState())) {
+                    sb.append(CommonConstant.CRLF);
+                }
+                // 日志产生时间转为yyyy-MM-dd HH:mm:ss格式，「埋点描述信息」，各埋点信息用" ➢ "连接
+                sb.append(DateUtil.format(new Date(simpleAnchorInfo.getLogTimestamp()), DatePattern.NORM_DATETIME_PATTERN))
+                        .append(CommonConstant.LEFT)
+                        .append(AnchorState.getDescriptionByCode(simpleAnchorInfo.getState()))
+                        .append(CommonConstant.RIGHT)
+                        .append(CommonConstant.JOIN);
+            }
+            // 组装用户链路追踪VO
+            for (String detail : sb.toString().split(CommonConstant.CRLF)) {
+                if (StrUtil.isNotBlank(detail)) {
+                    UserDataVo.ItemsVO itemsVO = UserDataVo.ItemsVO.builder()
+                            .businessId(entry.getKey())
+                            .channelType(ChannelType.getEnumByCode(messageTemplate.getSendChannel()).getDescription())
+                            .title(messageTemplate.getName())
+                            .detail(detail).build();
+                    items.add(itemsVO);
+                }
+            }
+        }
+        return UserDataVo.builder().items(items).count(Long.valueOf(map.size())).build();
+    }
 
     /**
-     * 如果传入的是模板ID，则生成【当天】的businessId进行查询
-     * 如果传入的是businessId，则按默认的businessId进行查询
-     * 判断是否为businessId则判断长度是否为16位（businessId长度固定16)
+     * 获取全链路追踪 消息模板维度信息【Redis中使用Hash存储】
+     * @param dataTraceParam 数据全链路追踪请求参数
+     * @return 图表VO
      */
-//    private String getRealBusinessId(String businessId) {
-//        if (AustinConstant.BUSINESS_ID_LENGTH == businessId.length()) {
-//            return businessId;
-//        }
-//        Optional<MessageTemplate> optional = messageTemplateDao.findById(Long.valueOf(businessId));
-//        if (optional.isPresent()) {
-//            MessageTemplate messageTemplate = optional.get();
-//            return String.valueOf(TaskInfoUtils.generateBusinessId(messageTemplate.getId(), messageTemplate.getTemplateType()));
-//        }
-//        return businessId;
-//    }
+    @Override
+    public EchartsDataVo getTraceMessageTemplateInfo(DataTraceParam dataTraceParam) {
+        // 获取businessId并获取模板信息
+        String businessId = getRealBusinessId(dataTraceParam.getBusinessId());
+        Optional<MessageTemplate> optional = messageTemplateDao.findById(
+                TaskInfoUtils.getMessageTemplateIdFromBusinessId(Long.valueOf(businessId)));
+        if (!optional.isPresent()) {
+            return null;
+        }
+        /**
+         * 获取Redis中清洗好的数据
+         *      key : creator:businessId
+         *      field : state
+         *      value : stateCount
+         */
+        String key = dataTraceParam.getCreator() + CommonConstant.COLON + getRealBusinessId(businessId);
+        Map<Object, Object> anchorResult = redisUtils.hGetAll(key);
+        return Convert4Amis.getEchartsVo(anchorResult, optional.get().getName(), businessId);
+    }
+
+    /**
+     * 若传入的是模板ID，则生成【当天】的businessId进行查询
+     * 若传入的是businessId，则按默认的businessId进行查询
+     * @param businessId 业务Id
+     * @return 业务Id
+     */
+    private String getRealBusinessId(String businessId) {
+        // 判断是否为businessId则判断长度是否为16位【businessId长度固定16】
+        if (OpushConstant.BUSINESS_ID_LENGTH == businessId.length()) {
+            return businessId;
+        }
+        // 判断模板id是否存在
+        Optional<MessageTemplate> optional = messageTemplateDao.findById(Long.valueOf(businessId));
+        if (optional.isPresent()) {
+            MessageTemplate messageTemplate = optional.get();
+            return String.valueOf(TaskInfoUtils.generateBusinessId(
+                    messageTemplate.getId(), messageTemplate.getTemplateType()));
+        }
+        return businessId;
+    }
 }

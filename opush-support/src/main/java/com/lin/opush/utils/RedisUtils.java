@@ -5,8 +5,6 @@ import com.google.common.base.Throwables;
 import com.lin.opush.constants.CommonConstant;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataAccessException;
-import org.springframework.data.redis.connection.RedisConnection;
 import org.springframework.data.redis.core.RedisCallback;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.script.RedisScript;
@@ -92,66 +90,6 @@ public class RedisUtils {
             });
         } catch (Exception e) {
             log.error("RedisUtils#pipelineSetEx fail! e:{}", Throwables.getStackTraceAsString(e));
-        }
-    }
-
-
-    /**
-     * lpush 方法 并指定 过期时间
-     */
-    public void lPush(String key, String value, Long seconds) {
-        try {
-            stringRedisTemplate.executePipelined((RedisCallback<String>) connection -> {
-                connection.lPush(key.getBytes(), value.getBytes());
-                connection.expire(key.getBytes(), seconds);
-                return null;
-            });
-        } catch (Exception e) {
-            log.error("RedisUtils#pipelineSetEx fail! e:{}", Throwables.getStackTraceAsString(e));
-        }
-    }
-
-    /**
-     * lLen 方法
-     */
-    public Long lLen(String key) {
-        try {
-            return stringRedisTemplate.opsForList().size(key);
-        } catch (Exception e) {
-            log.error("RedisUtils#pipelineSetEx fail! e:{}", Throwables.getStackTraceAsString(e));
-        }
-        return 0L;
-    }
-
-    /**
-     * lPop 方法
-     */
-    public String lPop(String key) {
-        try {
-            return stringRedisTemplate.opsForList().leftPop(key);
-        } catch (Exception e) {
-            log.error("RedisUtils#pipelineSetEx fail! e:{}", Throwables.getStackTraceAsString(e));
-        }
-        return "";
-    }
-
-    /**
-     * pipeline 设置 key-value 并设置过期时间
-     *
-     * @param seconds 过期时间
-     * @param delta   自增的步长
-     */
-    public void pipelineHashIncrByEx(Map<String, String> keyValues, Long seconds, Long delta) {
-        try {
-            stringRedisTemplate.executePipelined((RedisCallback<String>) connection -> {
-                for (Map.Entry<String, String> entry : keyValues.entrySet()) {
-                    connection.hIncrBy(entry.getKey().getBytes(), entry.getValue().getBytes(), delta);
-                    connection.expire(entry.getKey().getBytes(), seconds);
-                }
-                return null;
-            });
-        } catch (Exception e) {
-            log.error("redis pipelineSetEX fail! e:{}", Throwables.getStackTraceAsString(e));
         }
     }
 

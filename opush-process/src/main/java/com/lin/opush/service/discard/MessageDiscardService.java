@@ -38,7 +38,11 @@ public class MessageDiscardService {
         JSONArray array = JSON.parseArray(config.getProperty(DISCARD_MESSAGE_KEY, CommonConstant.EMPTY_VALUE_JSON_ARRAY));
         // 判断数组中是否存在当前任务信息中的消息模板id（有则丢弃）
         if (array.contains(String.valueOf(taskInfo.getMessageTemplateId()))) {
-            logUtils.print(AnchorInfo.builder().businessId(taskInfo.getBusinessId()).ids(taskInfo.getReceiver()).state(AnchorState.DISCARD.getCode()).build());
+            logUtils.print(AnchorInfo.builder()
+                                    .businessId(taskInfo.getBusinessId())
+                                    .ids(taskInfo.getReceiver())
+                                    .state(AnchorState.DISCARD.getCode())
+                                    .creator(taskInfo.getCreator()).build());
             return true;
         }
         return false;

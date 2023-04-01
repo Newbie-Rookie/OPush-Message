@@ -9,6 +9,7 @@
         <outputRelativeToContentRoot value="true" />
         <module name="opush-common" />
         <module name="opush-service-api" />
+        <module name="opush-stream" />
         <module name="opush-timed" />
         <module name="opush-web" />
         <module name="opush-support" />
@@ -22,6 +23,7 @@
       <module name="opush-process" target="1.8" />
       <module name="opush-service-api" target="1.8" />
       <module name="opush-service-api-impl" target="1.8" />
+      <module name="opush-stream" target="1.8" />
       <module name="opush-support" target="1.8" />
       <module name="opush-timed" target="1.8" />
       <module name="opush-web" target="1.8" />
@@ -33,6 +35,7 @@
       <module name="opush-process" options="-parameters" />
       <module name="opush-service-api" options="-parameters" />
       <module name="opush-service-api-impl" options="-parameters" />
+      <module name="opush-stream" options="-parameters" />
       <module name="opush-support" options="-parameters" />
       <module name="opush-timed" options="-parameters" />
       <module name="opush-web" options="-parameters" />

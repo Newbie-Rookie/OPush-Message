@@ -18,7 +18,7 @@ public enum AnchorState {
     /**
      * 消息被丢弃（从Kafka消费后，被丢弃）
      */
-    DISCARD(20, "消费被丢弃"),
+    DISCARD(20, "消息被丢弃"),
     /**
      * 消息被内容去重（重复内容5min内多次发送）
      */

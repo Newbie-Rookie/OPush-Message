@@ -4,28 +4,18 @@ package com.lin.opush.constants;
  * 通用常量
  */
 public class CommonConstant {
-    public final static String PERIOD = ".";
     public final static String SPACE = " ";
     public final static String COMMA = ",";
     public final static String COLON = ":";
-    public final static String SEMICOLON = ";";
-    public final static String POUND = "#";
-    public final static String SLASH = "/";
-    public final static String BACKSLASH = "\\";
-    public final static String EMPTY_STRING = "";
-    public final static String RADICAL = "|";
-    public final static String IS_NULL = "---";
+    public final static String LEFT = "「";
+    public final static String RIGHT = "」";
+    public final static String JOIN = " ➢ ";
+    public final static String CRLF = "\r\n";
 
     public final static char QM = '?';
     public final static String QM_STRING = "?";
     public final static String EQUAL_STRING = "=";
     public final static String AND_STRING = "&";
-
-    public final static String ONE = "1";
-    public final static String ZERO = "0";
-    public final static String MINUS_ONE = "-1";
-    public final static String YES = "Y";
-    public final static String NO = "N";
 
     /**
      * boolean转换
@@ -68,10 +58,4 @@ public class CommonConstant {
      * cron时间格式
      */
     public final static String CRON_FORMAT = "ss mm HH dd MM ? yyyy-yyyy";
-
-    /**
-     * 环境常量
-     */
-    public final static String ENV_DEV = "dev";
-    public final static String ENV_TEST = "test";
 }

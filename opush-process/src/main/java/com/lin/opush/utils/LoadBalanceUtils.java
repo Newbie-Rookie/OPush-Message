@@ -39,7 +39,7 @@ public class LoadBalanceUtils {
     /**
      * 系统动态流量配置【目前暂时支持短信和硬件动态流量配置，此时sendAccount = 0】
      */
-    private static final Integer AUTO_FLOW_RULE = 0;
+    private static final Long AUTO_FLOW_RULE = 0L;
 
     /**
      * 短信不同消息类型对应动态流量配置key

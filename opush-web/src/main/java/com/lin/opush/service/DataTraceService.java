@@ -2,6 +2,8 @@ package com.lin.opush.service;
 
 import com.lin.opush.domain.SmsRecord;
 import com.lin.opush.vo.DataTraceParam;
+import com.lin.opush.vo.amis.EchartsDataVo;
+import com.lin.opush.vo.amis.UserDataVo;
 import org.springframework.data.domain.Page;
 
 /**
@@ -17,15 +19,15 @@ public interface DataTraceService {
 
     /**
      * 获取全链路追踪 用户维度信息
-     * @param receiver 接收者
-     * @return
+     * @param dataTraceParam 数据全链路追踪请求参数
+     * @return 用户链路追踪VO
      */
-//    UserTimeLineVo getTraceUserInfo(String receiver);
+    UserDataVo getTraceUserInfo(DataTraceParam dataTraceParam);
 
     /**
      * 获取全链路追踪 消息模板维度信息
-     * @param businessId 业务ID（如果传入消息模板ID，则生成当天的业务ID）
-     * @return
+     * @param dataTraceParam 数据全链路追踪请求参数
+     * @return 图表VO
      */
-//    EchartsVo getTraceMessageTemplateInfo(String businessId);
+    EchartsDataVo getTraceMessageTemplateInfo(DataTraceParam dataTraceParam);
 }

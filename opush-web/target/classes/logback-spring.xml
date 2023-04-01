@@ -17,9 +17,9 @@
     <property name="log.path" value="opush-logs"/>
     <!-- 配置控制台和文件的日志输出格式 (控制台可彩色输出, 而文件中无法彩色输出) -->
     <property name="console_log_pattern"
-              value="%red(%d{yyyy-MM-dd HH:mm:ss.SSS}) %highlight(%-5level) %green([%20thread]) %boldMagenta(%-40.40logger:%-20.20M:%-4L) >> %gray(%msg%n)"/>
+              value="%red(%d{yyyy-MM-dd HH:mm:ss.SSS}) %green([%thread]) %highlight(%-5level) %boldMagenta(%logger{50}) >> %gray(%msg%n)"/>
     <property name="file_log_pattern"
-              value="%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level [%20thread] %-40.40logger:%-20.20M:%-4L >> %msg%n"/>
+              value="%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} >> %msg%n"/>
     <!-- 编码 -->
     <property name="charset" value="UTF-8"/>
 
@@ -156,7 +156,6 @@
 
     <!-- 关闭线程池注册日志 -->
     <logger name="com.dtp.core.DtpRegistry" level="off" />
-
 
     <!-- 日志配置的多环境开发 (也可使用多文件形式) -->
     <!--

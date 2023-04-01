@@ -32,6 +32,8 @@ public class PullReceipt {
                     for (PullReceiptStater pullReceiptStater : pullReceiptStaterList) {
                         pullReceiptStater.start();
                     }
+                    // 每轮拉取休息2s，不要太频繁
+                    Thread.sleep(2000);
                 } catch (Exception e) {
                     log.error("PullReceipt#init fail:{}", Throwables.getStackTraceAsString(e));
                 }

@@ -11,14 +11,18 @@ import com.alibaba.fastjson.JSONObject;
 
 import com.lin.opush.domain.ChannelAccount;
 import com.lin.opush.domain.SmsRecord;
+import com.lin.opush.enums.AnchorState;
 import com.lin.opush.enums.ChannelType;
 import com.lin.opush.enums.SmsStatus;
 import com.lin.opush.vo.amis.CommonAmisVo;
+import com.lin.opush.vo.amis.EchartsDataVo;
 import com.lin.opush.vo.amis.SmsDataVo;
 import lombok.extern.slf4j.Slf4j;
 
+import java.awt.*;
 import java.lang.reflect.Field;
 import java.util.*;
+import java.util.List;
 import java.util.stream.Collectors;
 
 /**
@@ -276,6 +280,46 @@ public class Convert4Amis {
     }
 
     /**
+     * 适配amis前端，获取EchartsVo
+     * @param anchorResult 数据
+     * @param templateName 模板标题
+     * @param businessId 业务Id
+     * @return 图表VO
+     */
+    public static EchartsDataVo getEchartsVo(Map<Object, Object> anchorResult, String templateName, String businessId) {
+        // x轴
+        List<String> xAxisList = new ArrayList<>();
+        // x轴上的数据
+        List<Integer> actualData = new ArrayList<>();
+        if (CollUtil.isNotEmpty(anchorResult)) {
+            // 将Redis中查询结果按埋点类型【Integer】排序
+            anchorResult = MapUtil.sort(anchorResult);
+            for (Map.Entry<Object, Object> entry : anchorResult.entrySet()) {
+                // 埋点信息描述【x轴】
+                String description = AnchorState.getDescriptionByCode(Integer.valueOf(String.valueOf(entry.getKey())));
+                xAxisList.add(description);
+                // 数据【发送条数】
+                actualData.add(Integer.valueOf(String.valueOf(entry.getValue())));
+            }
+        }
+        // 标题
+        String title = "消息模板「" + templateName + "」在「" +
+                DateUtil.format(
+                        DateUtil.parse(
+                                String.valueOf(TaskInfoUtils.getDateFromBusinessId(Long.valueOf(businessId)))
+                        ), DatePattern.CHINESE_DATE_FORMATTER
+                ) + "」的下发情况";
+        return EchartsDataVo.builder()
+                .title(EchartsDataVo.TitleVO.builder().left("30%").text(title).build())
+                .legend(EchartsDataVo.LegendVO.builder().right("10%").data(Arrays.asList("人数")).build())
+                .xAxis(EchartsDataVo.XaxisVO.builder().type("category").name("下发情况").data(xAxisList).build())
+                .series(Arrays.asList(EchartsDataVo.SeriesVO.builder().name("人数").type("bar").data(actualData).build()))
+                .yAxis(EchartsDataVo.YaxisVO.builder().type("value").name("人数").build())
+                .tooltip(EchartsDataVo.TooltipVO.builder().build())
+                .build();
+    }
+
+    /**
      * 适配amis前端
      * 得到模板的参数 组装好 返回给前端展示
      * @param wxTemplateId
@@ -346,36 +390,5 @@ public class Convert4Amis {
 //            }
 //        }
 //        return officialAccountParam;
-//    }
-
-    /**
-     * 适配amis前端，获取 EchartsVo
-     * @param anchorResult
-     * @param businessId
-     * @return
-     */
-//    public static EchartsVo getEchartsVo(Map<Object, Object> anchorResult, String templateName, String businessId) {
-//        List<String> xAxisList = new ArrayList<>();
-//        List<Integer> actualData = new ArrayList<>();
-//        if (CollUtil.isNotEmpty(anchorResult)) {
-//            anchorResult = MapUtil.sort(anchorResult);
-//            for (Map.Entry<Object, Object> entry : anchorResult.entrySet()) {
-//                String description = AnchorState.getDescriptionByCode(Integer.valueOf(String.valueOf(entry.getKey())));
-//                xAxisList.add(description);
-//                actualData.add(Integer.valueOf(String.valueOf(entry.getValue())));
-//            }
-//        }
-//
-//        String title = "【" + templateName + "】在" + DateUtil.format(DateUtil.parse(String.valueOf(TaskInfoUtils.getDateFromBusinessId(Long.valueOf(businessId)))), DatePattern.CHINESE_DATE_FORMATTER) + "的下发情况：";
-//
-//        return EchartsVo.builder()
-//                .title(EchartsVo.TitleVO.builder().text(title).build())
-//                .legend(EchartsVo.LegendVO.builder().data(Arrays.asList("人数")).build())
-//                .xAxis(EchartsVo.XaxisVO.builder().data(xAxisList).build())
-//                .series(Arrays.asList(EchartsVo.SeriesVO.builder().name("人数").type("bar").data(actualData).build()))
-//                .yAxis(EchartsVo.YaxisVO.builder().build())
-//                .tooltip(EchartsVo.TooltipVO.builder().build())
-//                .build();
-//
 //    }
 }

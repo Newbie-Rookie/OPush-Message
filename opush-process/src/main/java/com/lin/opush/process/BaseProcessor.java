@@ -62,10 +62,18 @@ public abstract class BaseProcessor implements Processor {
         isFlowControl(taskInfo);
         // 调用子类实现的处理方法进行真正消息发送
         if (realSend(taskInfo)) {
-            logUtils.print(AnchorInfo.builder().state(AnchorState.SEND_SUCCESS.getCode()).businessId(taskInfo.getBusinessId()).ids(taskInfo.getReceiver()).build());
+            logUtils.print(AnchorInfo.builder()
+                                    .state(AnchorState.SEND_SUCCESS.getCode())
+                                    .businessId(taskInfo.getBusinessId())
+                                    .ids(taskInfo.getReceiver())
+                                    .creator(taskInfo.getCreator()).build());
             return;
         }
-        logUtils.print(AnchorInfo.builder().state(AnchorState.SEND_FAIL.getCode()).businessId(taskInfo.getBusinessId()).ids(taskInfo.getReceiver()).build());
+        logUtils.print(AnchorInfo.builder()
+                                .state(AnchorState.SEND_FAIL.getCode())
+                                .businessId(taskInfo.getBusinessId())
+                                .ids(taskInfo.getReceiver())
+                                .creator(taskInfo.getCreator()).build());
     }
 
     /**

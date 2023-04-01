@@ -1,0 +1,29 @@
+version: "2.2"
+services:
+  jobmanager:
+    image: flink:1.14.3
+    ports:
+      - "8081:8081"
+    command: jobmanager
+    container_name: flink_jobmanager
+    environment:
+      - |
+        FLINK_PROPERTIES=
+        jobmanager.rpc.address: jobmanager
+      - SET_CONTAINER_TIMEZONE=true
+      - CONTAINER_TIMEZONE=Asia/Shanghai
+      - TZ=Asia/Shanghai
+  taskmanager:
+    image: flink:1.14.3
+    depends_on:
+      - jobmanager
+    command: taskmanager
+    container_name: flink_taskmanager
+    environment:
+      - |
+        FLINK_PROPERTIES=
+        jobmanager.rpc.address: jobmanager
+        taskmanager.numberOfTaskSlots: 2
+      - SET_CONTAINER_TIMEZONE=true
+      - CONTAINER_TIMEZONE=Asia/Shanghai
+      - TZ=Asia/Shanghai

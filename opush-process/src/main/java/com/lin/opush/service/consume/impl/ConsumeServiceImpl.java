@@ -85,7 +85,8 @@ public class ConsumeServiceImpl implements ConsumeService {
             logUtils.print(LogParam.builder().bizType(LOG_BIZ_TYPE).object(taskInfo).build(),
                                             AnchorInfo.builder().ids(taskInfo.getReceiver())
                                                                 .businessId(taskInfo.getBusinessId())
-                                                                .state(AnchorState.RECEIVE.getCode()).build());
+                                                                .state(AnchorState.RECEIVE.getCode())
+                                                                .creator(taskInfo.getCreator()).build());
             // 创建任务（run方法）
             Task task = context.getBean(Task.class).setTaskInfo(taskInfo);
             // 根据groupId获取对应线程池执行任务

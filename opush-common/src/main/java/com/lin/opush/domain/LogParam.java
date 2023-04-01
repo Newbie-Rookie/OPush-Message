@@ -24,5 +24,5 @@ public class LogParam {
     /**
      * 生成时间
      */
-    private long timestamp;
+    private Long timestamp;
 }
