@@ -21,6 +21,7 @@ C:\Users\a\Desktop\OPush-Message\opush-common\src\main\java\com\lin\opush\dto\ac
 C:\Users\a\Desktop\OPush-Message\opush-common\src\main\java\com\lin\opush\enums\ChannelType.java
 C:\Users\a\Desktop\OPush-Message\opush-common\src\main\java\com\lin\opush\dto\model\AlipayMiniProgramContentModel.java
 C:\Users\a\Desktop\OPush-Message\opush-common\src\main\java\com\lin\opush\enums\DeduplicationType.java
+C:\Users\a\Desktop\OPush-Message\opush-common\src\main\java\com\lin\opush\constants\ChannelAccountConstant.java
 C:\Users\a\Desktop\OPush-Message\opush-common\src\main\java\com\lin\opush\constants\OpushConstant.java
 C:\Users\a\Desktop\OPush-Message\opush-common\src\main\java\com\lin\opush\dto\model\ContentModel.java
 C:\Users\a\Desktop\OPush-Message\opush-common\src\main\java\com\lin\opush\constants\ThreadPoolConstant.java

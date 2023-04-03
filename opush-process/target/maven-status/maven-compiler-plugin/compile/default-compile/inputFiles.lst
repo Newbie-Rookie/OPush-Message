@@ -30,6 +30,7 @@ C:\Users\a\Desktop\OPush-Message\opush-process\src\main\java\com\lin\opush\servi
 C:\Users\a\Desktop\OPush-Message\opush-process\src\main\java\com\lin\opush\process\Processor.java
 C:\Users\a\Desktop\OPush-Message\opush-process\src\main\java\com\lin\opush\service\flowControl\FlowControlStrategyService.java
 C:\Users\a\Desktop\OPush-Message\opush-process\src\main\java\com\lin\opush\process\BaseProcessor.java
+C:\Users\a\Desktop\OPush-Message\opush-process\src\main\java\com\lin\opush\process\impl\WeChatMiniProgramProcessor.java
 C:\Users\a\Desktop\OPush-Message\opush-process\src\main\java\com\lin\opush\service\flowControl\annotations\LocalFlowControlStrategy.java
 C:\Users\a\Desktop\OPush-Message\opush-process\src\main\java\com\lin\opush\config\ProcessThreadPoolConfig.java
 C:\Users\a\Desktop\OPush-Message\opush-process\src\main\java\com\lin\opush\service\deduplication\ParamAndServiceHolder.java

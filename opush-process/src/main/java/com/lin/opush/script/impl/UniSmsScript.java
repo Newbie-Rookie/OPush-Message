@@ -8,6 +8,7 @@ import com.apistd.uni.UniResponse;
 import com.apistd.uni.sms.UniMessage;
 import com.apistd.uni.sms.UniSMS;
 import com.google.common.base.Throwables;
+import com.lin.opush.constants.CommonConstant;
 import com.lin.opush.dao.ChannelAccountDao;
 import com.lin.opush.dao.SmsRecordDao;
 import com.lin.opush.domain.ChannelAccount;
@@ -169,7 +170,8 @@ public class UniSmsScript implements SmsScript {
     public void saveSmsReceipt(SmsReceipt receipt) {
         try {
             // 渠道账号信息【UniSMS对应的渠道账号信息】
-            ChannelAccount channelAccount = channelAccountDao.findByNameEquals(SMS_SUPPLIER);
+            ChannelAccount channelAccount = channelAccountDao
+                    .findByNameEqualsAndIsDeletedEquals(SMS_SUPPLIER, CommonConstant.FALSE);
             // 渠道账号配置
             UniSmsAccount account = accountUtils.getAccountById(channelAccount.getId(), UniSmsAccount.class);
             // 组装短信记录

@@ -71,6 +71,9 @@ CREATE TABLE `tb_channelAccount`
     `send_channel`   tinyint(4) NOT NULL DEFAULT '0' COMMENT '消息发送渠道：10.IM 20.Push 30.短信 40.Email 50.公众号 60.小程序 70.企业微信 80.钉钉机器人 90.钉钉工作通知 100.企业微信机器人 110.飞书机器人 110. 飞书应用消息 ',
     `account_config` varchar(1024) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '账号配置',
     `creator`        varchar(128) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'opush' COMMENT '拥有者',
+    `created`        int(11) NOT NULL DEFAULT '0' COMMENT '创建时间',
+    `updated`        int(11) NOT NULL DEFAULT '0' COMMENT '更新时间',
+    `is_deleted`     tinyint(4) NOT NULL DEFAULT '0' COMMENT '是否已删除：0.未删除 1.已删除',
     PRIMARY KEY (`id`),
     KEY              `idx_send_channel` (`send_channel`)
 ) ENGINE = InnoDB

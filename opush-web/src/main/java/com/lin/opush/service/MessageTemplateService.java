@@ -6,7 +6,6 @@ import com.lin.opush.vo.BasicResultVO;
 import com.lin.opush.vo.MessageTemplateParam;
 import org.springframework.data.domain.Page;
 
-import java.io.Reader;
 import java.util.List;
 
 /**

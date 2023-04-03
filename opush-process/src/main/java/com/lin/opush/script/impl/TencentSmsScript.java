@@ -6,6 +6,7 @@ import cn.hutool.core.util.ArrayUtil;
 import cn.hutool.core.util.IdUtil;
 import com.alibaba.fastjson.JSON;
 import com.google.common.base.Throwables;
+import com.lin.opush.constants.CommonConstant;
 import com.lin.opush.dao.ChannelAccountDao;
 import com.lin.opush.dao.SmsRecordDao;
 import com.lin.opush.domain.ChannelAccount;
@@ -60,6 +61,11 @@ public class TencentSmsScript implements SmsScript {
      */
     @Autowired
     private ChannelAccountDao channelAccountDao;
+
+    /**
+     * 该短信渠道名【腾讯云】
+     */
+    private static final String SMS_SUPPLIER = "腾讯云";
 
     /**
      * 初始化发送短信客户端
@@ -245,7 +251,8 @@ public class TencentSmsScript implements SmsScript {
     public void sendLoginSms(LoginUser loginUser){
         try {
             // 获取渠道账号配置
-            ChannelAccount channelAccount = channelAccountDao.findByNameEquals("腾讯云");
+            ChannelAccount channelAccount = channelAccountDao
+                    .findByNameEqualsAndIsDeletedEquals(SMS_SUPPLIER, CommonConstant.FALSE);
             TencentSmsAccount account = JSON.parseObject(channelAccount.getAccountConfig(), TencentSmsAccount.class);
             // 初始化发送短信客户端
             SmsClient client = initClient(account);

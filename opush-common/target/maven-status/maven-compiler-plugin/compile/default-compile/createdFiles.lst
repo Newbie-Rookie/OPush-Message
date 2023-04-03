@@ -40,6 +40,7 @@ com\lin\opush\dto\model\DingDingRobotContentModel$DingDingRobotContentModelBuild
 com\lin\opush\domain\TaskInfo.class
 com\lin\opush\dto\account\dingding\DingDingRobotAccount$DingDingRobotAccountBuilder.class
 com\lin\opush\enums\ChannelType.class
+com\lin\opush\constants\ChannelAccountConstant.class
 com\lin\opush\domain\LogParam$LogParamBuilder.class
 com\lin\opush\dto\model\EnterpriseWeChatRobotContentModel$EnterpriseWeChatRobotContentModelBuilder.class
 com\lin\opush\enums\SmsStatus.class

@@ -1,5 +1,6 @@
 package com.lin.opush.utils;
 
+import me.chanjar.weixin.common.bean.subscribemsg.TemplateInfo;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.date.DatePattern;
 import cn.hutool.core.date.DateUtil;
@@ -19,7 +20,6 @@ import com.lin.opush.vo.amis.EchartsDataVo;
 import com.lin.opush.vo.amis.SmsDataVo;
 import lombok.extern.slf4j.Slf4j;
 
-import java.awt.*;
 import java.lang.reflect.Field;
 import java.util.*;
 import java.util.List;
@@ -137,6 +137,8 @@ public class Convert4Amis {
 
     /**
      * 适配amis前端，得到渠道账号信息，返回给前端做展示
+     * @param channelAccounts
+     * @param channelType
      * @return
      */
     public static List<CommonAmisVo> getChannelAccountVo(List<ChannelAccount> channelAccounts, Integer channelType) {
@@ -147,7 +149,8 @@ public class Convert4Amis {
             result.add(commonAmisVo);
         }
         for (ChannelAccount channelAccount : channelAccounts) {
-            CommonAmisVo commonAmisVo = CommonAmisVo.builder().label(channelAccount.getName()).value(String.valueOf(channelAccount.getId())).build();
+            CommonAmisVo commonAmisVo = CommonAmisVo.builder().label(channelAccount.getName())
+                                                    .value(String.valueOf(channelAccount.getId())).build();
             result.add(commonAmisVo);
         }
         return result;
@@ -173,7 +176,7 @@ public class Convert4Amis {
         for (String param : placeholderList) {
             // 多列输入框（必填、快速编辑）
             CommonAmisVo.ColumnsDTO dto = CommonAmisVo.ColumnsDTO.builder().name(param).label(param).type("input-text")
-                                                                                    .required(true).quickEdit(true).build();
+                                                                .required(true).quickEdit(true).build();
             columnsDtoS.add(dto);
         }
         testParam.setColumns(columnsDtoS);
@@ -242,12 +245,17 @@ public class Convert4Amis {
                 }
             }
         }
-        Set<String> result = placeholderList.stream().map(s -> s.replaceAll("\\{", "").replaceAll("\\$", "").replaceAll("\\}", "")).collect(Collectors.toSet());
+        Set<String> result = placeholderList.stream()
+                            .map(s -> s.replaceAll("\\{", "")
+                                        .replaceAll("\\$", "")
+                                        .replaceAll("\\}", ""))
+                                                    .collect(Collectors.toSet());
         return result;
     }
 
     /**
      * 适配amis前端，获取 SmsTimeLineVo
+     * @param maps 短息下发记录map【包含发送和回执记录】
      * @return
      */
     public static SmsDataVo getSmsDataVo(Map<String, List<SmsRecord>> maps) {
@@ -320,75 +328,36 @@ public class Convert4Amis {
     }
 
     /**
-     * 适配amis前端
-     * 得到模板的参数 组装好 返回给前端展示
-     * @param wxTemplateId
-     * @param allPrivateTemplate
+     * 适配amis前端，获取模板id对应模板详细信息【关键词】
+     * @param wxTemplateId 模板id
+     * @param templateList 模板列表
      * @return
      */
-//    public static CommonAmisVo getWxMpTemplateParam(String wxTemplateId, List<WxMpTemplate> allPrivateTemplate) {
-//        CommonAmisVo officialAccountParam = null;
-//        for (WxMpTemplate wxMpTemplate : allPrivateTemplate) {
-//            if (wxTemplateId.equals(wxMpTemplate.getTemplateId())) {
-//                String[] data = wxMpTemplate.getContent().split(StrUtil.LF);
-//                officialAccountParam = CommonAmisVo.builder()
-//                        .type("input-table")
-//                        .name("officialAccountParam")
-//                        .addable(true)
-//                        .editable(true)
-//                        .needConfirm(false)
-//                        .build();
-//                List<CommonAmisVo.ColumnsDTO> columnsDtoS = new ArrayList<>();
-//                for (String datum : data) {
-//                    String name = datum.substring(datum.indexOf("{{") + 2, datum.indexOf("."));
-//                    CommonAmisVo.ColumnsDTO.ColumnsDTOBuilder dtoBuilder = CommonAmisVo.ColumnsDTO.builder().name(name).type("input-text").required(true).quickEdit(true);
-//                    if (datum.contains("first")) {
-//                        dtoBuilder.label("名字");
-//                    } else if (datum.contains("remark")) {
-//                        dtoBuilder.label("备注");
-//                    } else {
-//                        dtoBuilder.label(datum.split("：")[0]);
-//                    }
-//                    columnsDtoS.add(dtoBuilder.build());
-//                }
-//                officialAccountParam.setColumns(columnsDtoS);
-//
-//            }
-//        }
-//        return officialAccountParam;
-//    }
-
-    /**
-     * 适配amis前端
-     * 得到模板的参数 组装好 返回给前端展示
-     * @param wxTemplateId
-     * @param templateList
-     * @return
-     */
-//    public static CommonAmisVo getWxMaTemplateParam(String wxTemplateId, List<TemplateInfo> templateList) {
-//        CommonAmisVo officialAccountParam = null;
-//        for (TemplateInfo templateInfo : templateList) {
-//            if (wxTemplateId.equals(templateInfo.getPriTmplId())) {
-//                String[] data = templateInfo.getContent().split(StrUtil.LF);
-//                officialAccountParam = CommonAmisVo.builder()
-//                        .type("input-table")
-//                        .name("miniProgramParam")
-//                        .addable(true)
-//                        .editable(true)
-//                        .needConfirm(false)
-//                        .build();
-//                List<CommonAmisVo.ColumnsDTO> columnsDtoS = new ArrayList<>();
-//                for (String datum : data) {
-//                    String name = datum.substring(datum.indexOf("{{") + 2, datum.indexOf("."));
-//                    String label = datum.split(":")[0];
-//                    CommonAmisVo.ColumnsDTO columnsDTO = CommonAmisVo.ColumnsDTO.builder()
-//                            .name(name).type("input-text").required(true).quickEdit(true).label(label).build();
-//                    columnsDtoS.add(columnsDTO);
-//                }
-//                officialAccountParam.setColumns(columnsDtoS);
-//
-//            }
-//        }
-//        return officialAccountParam;
-//    }
+    public static CommonAmisVo getWxMaTemplateParam(String wxTemplateId, List<TemplateInfo> templateList) {
+        // 模板参数
+        CommonAmisVo TemplateParam = null;
+        // 获取匹配模板id对应模板详细信息
+        for (TemplateInfo templateInfo : templateList) {
+            if (wxTemplateId.equals(templateInfo.getPriTmplId())) {
+                String[] data = templateInfo.getContent().split(StrUtil.LF);
+                // 封装表格（input-table：可增加一行、可编辑、可删除、无需确认操作）
+                TemplateParam = CommonAmisVo.builder()
+                                                .type("input-table").name("miniProgramParam")
+                                                .addable(true).editable(true).removable(true)
+                                                .needConfirm(true).build();
+                // 封装表格中列集合
+                List<CommonAmisVo.ColumnsDTO> columnsDtoS = new ArrayList<>();
+                for (String datum : data) {
+                    String name = datum.substring(datum.indexOf("{{") + 2, datum.indexOf("."));
+                    String label = datum.split(":")[0];
+                    // 多列输入框（必填、快速编辑）
+                    CommonAmisVo.ColumnsDTO columnsDTO = CommonAmisVo.ColumnsDTO.builder().name(name)
+                                .label(label).type("input-text").required(true).quickEdit(true).build();
+                    columnsDtoS.add(columnsDTO);
+                }
+                TemplateParam.setColumns(columnsDtoS);
+            }
+        }
+        return TemplateParam;
+    }
 }

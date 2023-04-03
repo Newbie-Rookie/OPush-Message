@@ -1,20 +1,34 @@
 package com.lin.opush.utils;
 
+import cn.binarywang.wx.miniapp.api.WxMaService;
+import cn.binarywang.wx.miniapp.api.impl.WxMaServiceImpl;
+import cn.binarywang.wx.miniapp.config.impl.WxMaRedisBetterConfigImpl;
+import cn.hutool.crypto.symmetric.SymmetricAlgorithm;
+import cn.hutool.crypto.symmetric.SymmetricCrypto;
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.google.common.base.Throwables;
+import com.lin.opush.constants.ChannelAccountConstant;
+import com.lin.opush.constants.CommonConstant;
 import com.lin.opush.dao.ChannelAccountDao;
 import com.lin.opush.domain.ChannelAccount;
 import com.lin.opush.dto.account.email.EmailAccount;
 import com.lin.opush.dto.account.sms.SmsAccount;
+import com.lin.opush.dto.account.wechat.WeChatMiniProgramAccount;
 import com.lin.opush.enums.ChannelType;
+import com.lin.opush.service.ConfigService;
 import com.sun.mail.util.MailSSLSocketFactory;
 import lombok.extern.slf4j.Slf4j;
+import me.chanjar.weixin.common.redis.RedisTemplateWxRedisOps;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.core.StringRedisTemplate;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 
 /**
  * 渠道账号工具类
@@ -29,10 +43,35 @@ public class AccountUtils {
     private ChannelAccountDao channelAccountDao;
 
     /**
+     * 配置服务
+     */
+    @Autowired
+    private ConfigService config;
+
+    /**
+     * 加解密key
+     */
+    private static final String ENCRYPT_AND_DECRYPT_KEY = "encryptAndDecryptKey";
+
+    /**
      * Redis模板
      */
     @Autowired
     private StringRedisTemplate stringRedisTemplate;
+
+    /**
+     * 保存消息的小程序账号
+     */
+    private ConcurrentMap<ChannelAccount, WxMaService> miniProgramServiceMap = new ConcurrentHashMap<>();
+
+    /**
+     * 封装微信小程序对Redis的相关操作
+     * @return
+     */
+    @Bean
+    public RedisTemplateWxRedisOps redisTemplateWxRedisOps() {
+        return new RedisTemplateWxRedisOps(stringRedisTemplate);
+    }
 
     /**
      * 通过脚本名匹配到对应的短信账号
@@ -44,7 +83,8 @@ public class AccountUtils {
     public <T> T getSmsAccountByScriptName(String scriptName, Class<T> clazz) {
         try {
             // 根据发送渠道获取所有短信渠道账号
-            List<ChannelAccount> channelAccountList = channelAccountDao.findAllBySendChannelEquals(ChannelType.SMS.getCode());
+            List<ChannelAccount> channelAccountList = channelAccountDao
+                    .findAllBySendChannelEqualsAndIsDeletedEquals(ChannelType.SMS.getCode(), CommonConstant.FALSE);
             for (ChannelAccount channelAccount : channelAccountList) {
                 try {
                     // 根据scriptName(脚本名称)获取对应渠道账号
@@ -72,7 +112,8 @@ public class AccountUtils {
     public EmailAccount getEmailAccountBySupplierName(String supplierName, Class<EmailAccount> clazz) {
         try {
             // 根据发送渠道获取所有邮件渠道账号
-            List<ChannelAccount> channelAccountList = channelAccountDao.findAllBySendChannelEquals(ChannelType.EMAIL.getCode());
+            List<ChannelAccount> channelAccountList = channelAccountDao
+                    .findAllBySendChannelEqualsAndIsDeletedEquals(ChannelType.EMAIL.getCode(), CommonConstant.FALSE);
             for (ChannelAccount channelAccount : channelAccountList) {
                 try {
                     // 根据supplierName(渠道商名称)获取对应渠道账号
@@ -91,24 +132,40 @@ public class AccountUtils {
                         return emailAccount;
                     }
                 } catch (Exception e) {
-                    log.error("AccountUtils#getEmailAccountBySupplierName parse fail! e:{},account:{}", Throwables.getStackTraceAsString(e), JSON.toJSONString(channelAccount));
+                    log.error("AccountUtils#getEmailAccountBySupplierName parse fail! e:{},account:{}",
+                            Throwables.getStackTraceAsString(e), JSON.toJSONString(channelAccount));
                 }
             }
         } catch (Exception e) {
-            log.error("AccountUtils#getEmailAccountBySupplierName fail! e:{}", Throwables.getStackTraceAsString(e));
+            log.error("AccountUtils#getEmailAccountBySupplierName fail! e:{}",
+                    Throwables.getStackTraceAsString(e));
         }
         log.error("AccountUtils#getEmailAccountBySupplierName not found!:{}", supplierName);
         return null;
     }
 
     /**
-     * 微信小程序：返回 WxMaService
-     * 微信服务号：返回 WxMpService
-     * 其他渠道：返回XXXAccount账号对象
-     * @param sendAccountId
-     * @param clazz
-     * @param <T>
+     * 初始化微信小程序【access_token用Redis存储】
      * @return
+     */
+    private WxMaService initMiniProgramService(WeChatMiniProgramAccount miniProgramAccount) {
+        WxMaService wxMaService = new WxMaServiceImpl();
+        // 基于Redis存储的微信小程序配置类
+        WxMaRedisBetterConfigImpl config = new WxMaRedisBetterConfigImpl(redisTemplateWxRedisOps(),
+                                                ChannelAccountConstant.MINI_PROGRAM_TOKEN_PREFIX);
+        config.setAppid(miniProgramAccount.getAppId());
+        config.setSecret(miniProgramAccount.getAppSecret());
+        wxMaService.setWxMaConfig(config);
+        return wxMaService;
+    }
+
+    /**
+     * 根据渠道账号Id获取渠道账号配置
+     * 【微信小程序返回WxMaService，其他渠道返回XXXAccount账号对象】
+     * @param sendAccountId 渠道账号Id
+     * @param clazz 渠道账号类型
+     * @param <T> 泛型
+     * @return 渠道账号
      */
     @SuppressWarnings("unchecked")
     public <T> T getAccountById(Long sendAccountId, Class<T> clazz) {
@@ -116,58 +173,20 @@ public class AccountUtils {
             Optional<ChannelAccount> optionalChannelAccount = channelAccountDao.findById(Long.valueOf(sendAccountId));
             if (optionalChannelAccount.isPresent()) {
                 ChannelAccount channelAccount = optionalChannelAccount.get();
-//                if (clazz.equals(WxMaService.class)) {
-//                    return (T) ConcurrentHashMapUtils.computeIfAbsent(miniProgramServiceMap, channelAccount, account -> initMiniProgramService(JSON.parseObject(account.getAccountConfig(), WeChatMiniProgramAccount.class)));
-//                } else if (clazz.equals(WxMpService.class)) {
-//                    return (T) ConcurrentHashMapUtils.computeIfAbsent(officialAccountServiceMap, channelAccount, account -> initOfficialAccountService(JSON.parseObject(account.getAccountConfig(), WeChatOfficialAccount.class)));
-//                } else {
+                if (clazz.equals(WxMaService.class)) {
+                    byte[] key = JSONArray.parseObject(config.getProperty(ENCRYPT_AND_DECRYPT_KEY,
+                            CommonConstant.EMPTY_VALUE_JSON_ARRAY), byte[].class);
+                    SymmetricCrypto des = new SymmetricCrypto(SymmetricAlgorithm.DESede, key);
+                    return (T) ConcurrentHashMapUtils.computeIfAbsent(miniProgramServiceMap, channelAccount,
+                            account -> initMiniProgramService(JSON.parseObject(
+                                    des.decryptStr(account.getAccountConfig()), WeChatMiniProgramAccount.class)));
+                } else {
                     return JSON.parseObject(channelAccount.getAccountConfig(), clazz);
-//                }
+                }
             }
         } catch (Exception e) {
             log.error("AccountUtils#getAccountById fail! e:{}", Throwables.getStackTraceAsString(e));
         }
         return null;
     }
-
-    /**
-     * 消息的小程序/微信服务号账号
-     */
-//    private ConcurrentMap<ChannelAccount, WxMpService> officialAccountServiceMap = new ConcurrentHashMap<>();
-//    private ConcurrentMap<ChannelAccount, WxMaService> miniProgramServiceMap = new ConcurrentHashMap<>();
-//
-//    @Bean
-//    public RedisTemplateWxRedisOps redisTemplateWxRedisOps() {
-//        return new RedisTemplateWxRedisOps(stringRedisTemplate);
-//    }
-
-    /**
-     * 初始化微信服务号
-     * access_token 用redis存储
-     * @return
-     */
-//    public WxMpService initOfficialAccountService(WeChatOfficialAccount officialAccount) {
-//        WxMpService wxMpService = new WxMpServiceImpl();
-//        WxMpRedisConfigImpl config = new WxMpRedisConfigImpl(redisTemplateWxRedisOps(), SendAccountConstant.OFFICIAL_ACCOUNT_ACCESS_TOKEN_PREFIX);
-//        config.setAppId(officialAccount.getAppId());
-//        config.setSecret(officialAccount.getSecret());
-//        config.setToken(officialAccount.getToken());
-//        wxMpService.setWxMpConfigStorage(config);
-//        return wxMpService;
-//    }
-
-    /**
-     * 初始化微信小程序
-     * access_token 用redis存储
-     *
-     * @return
-     */
-//    private WxMaService initMiniProgramService(WeChatMiniProgramAccount miniProgramAccount) {
-//        WxMaService wxMaService = new WxMaServiceImpl();
-//        WxMaRedisBetterConfigImpl config = new WxMaRedisBetterConfigImpl(redisTemplateWxRedisOps(), SendAccountConstant.MINI_PROGRAM_TOKEN_PREFIX);
-//        config.setAppid(miniProgramAccount.getAppId());
-//        config.setSecret(miniProgramAccount.getAppSecret());
-//        wxMaService.setWxMaConfig(config);
-//        return wxMaService;
-//    }
 }

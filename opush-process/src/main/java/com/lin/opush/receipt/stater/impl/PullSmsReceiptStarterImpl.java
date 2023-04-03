@@ -3,6 +3,7 @@ package com.lin.opush.receipt.stater.impl;
 import cn.hutool.core.collection.CollUtil;
 import com.alibaba.fastjson.JSON;
 import com.google.common.base.Throwables;
+import com.lin.opush.constants.CommonConstant;
 import com.lin.opush.dao.ChannelAccountDao;
 import com.lin.opush.dao.SmsRecordDao;
 import com.lin.opush.domain.ChannelAccount;
@@ -57,7 +58,8 @@ public class PullSmsReceiptStarterImpl implements PullReceiptStater {
     public void start() {
         try {
             // 获取短信渠道账号列表
-            List<ChannelAccount> channelAccountList = channelAccountDao.findAllBySendChannelEquals(ChannelType.SMS.getCode());
+            List<ChannelAccount> channelAccountList = channelAccountDao
+                    .findAllBySendChannelEqualsAndIsDeletedEquals(ChannelType.SMS.getCode(), CommonConstant.FALSE);
             // 遍历短信渠道账号
             for (ChannelAccount channelAccount : channelAccountList) {
                 // 排除部分脚本【不属于主动拉取的方式拉取回执】

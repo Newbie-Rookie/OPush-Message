@@ -41,4 +41,17 @@ public class ChannelAccount {
      * 渠道账号拥有者（默认opush）
      */
     private String creator;
+    /**
+     * 是否删除【0：未删除，1：已删除】
+     */
+    private Integer isDeleted;
+
+    /**
+     * 创建时间【单位s】
+     */
+    private Integer created;
+    /**
+     * 更新时间【单位s】
+     */
+    private Integer updated;
 }

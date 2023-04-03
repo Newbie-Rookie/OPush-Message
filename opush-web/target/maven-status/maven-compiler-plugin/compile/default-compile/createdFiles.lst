@@ -44,6 +44,7 @@ com\lin\opush\exception\ExceptionHandlerAdvice.class
 com\lin\opush\vo\MessageTemplateParam.class
 com\lin\opush\utils\UserHolder.class
 com\lin\opush\controller\UserController.class
+com\lin\opush\controller\WeChatMiniProgramController.class
 com\lin\opush\utils\TencentSmsScript.class
 com\lin\opush\vo\amis\CommonAmisVo$ApiDTO.class
 com\lin\opush\vo\amis\EchartsDataVo$XaxisVO$XaxisVOBuilder.class

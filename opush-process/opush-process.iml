@@ -166,6 +166,16 @@
     <orderEntry type="library" name="Maven: com.alibaba:transmittable-thread-local:2.12.1" level="project" />
     <orderEntry type="library" name="Maven: io.github.lyh200:dynamic-tp-logging:1.0.2" level="project" />
     <orderEntry type="library" name="Maven: commons-codec:commons-codec:1.15" level="project" />
+    <orderEntry type="library" name="Maven: com.github.binarywang:weixin-java-miniapp:4.4.0" level="project" />
+    <orderEntry type="library" name="Maven: com.github.binarywang:weixin-java-common:4.4.0" level="project" />
+    <orderEntry type="library" name="Maven: com.thoughtworks.xstream:xstream:1.4.19" level="project" />
+    <orderEntry type="library" name="Maven: io.github.x-stream:mxparser:1.2.2" level="project" />
+    <orderEntry type="library" name="Maven: xmlpull:xmlpull:1.1.3.1" level="project" />
+    <orderEntry type="library" name="Maven: org.slf4j:jcl-over-slf4j:1.7.36" level="project" />
+    <orderEntry type="library" name="Maven: commons-io:commons-io:2.7" level="project" />
+    <orderEntry type="library" name="Maven: javax.validation:validation-api:2.0.1.Final" level="project" />
+    <orderEntry type="library" name="Maven: org.dom4j:dom4j:2.1.3" level="project" />
+    <orderEntry type="library" name="Maven: org.bouncycastle:bcpkix-jdk15on:1.68" level="project" />
     <orderEntry type="library" name="Maven: com.sun.mail:javax.mail:1.6.2" level="project" />
     <orderEntry type="library" name="Maven: javax.activation:activation:1.1" level="project" />
     <orderEntry type="library" name="Maven: com.tencentcloudapi:tencentcloud-sdk-java:3.1.688" level="project" />
@@ -190,7 +200,6 @@
     <orderEntry type="library" name="Maven: org.apache.httpcomponents.core5:httpcore5-h2:5.1.5" level="project" />
     <orderEntry type="library" name="Maven: com.aliyun:aliyun-java-core:0.1.8-beta" level="project" />
     <orderEntry type="library" name="Maven: com.github.tomakehurst:wiremock-standalone:2.24.1" level="project" />
-    <orderEntry type="library" name="Maven: org.dom4j:dom4j:2.1.3" level="project" />
     <orderEntry type="library" name="Maven: org.reactivestreams:reactive-streams:1.0.4" level="project" />
     <orderEntry type="library" name="Maven: com.aliyun:aliyun-java-auth:0.1.8-beta" level="project" />
     <orderEntry type="library" name="Maven: org.bouncycastle:bcprov-jdk15on:1.68" level="project" />

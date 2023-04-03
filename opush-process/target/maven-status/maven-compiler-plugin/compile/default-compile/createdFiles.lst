@@ -21,6 +21,7 @@ com\lin\opush\service\deduplication\deduplicationService\ContentDeduplicationSer
 com\lin\opush\domain\sms\MessageTypeConfig$MessageTypeConfigBuilder.class
 com\lin\opush\service\deduplication\deduplicationParam\AbstractDeduplicationParamBuilder.class
 com\lin\opush\service\deduplication\limit\LimitService.class
+com\lin\opush\process\impl\WeChatMiniProgramProcessor.class
 com\lin\opush\receiver\kafka\StartKafkaReceiver.class
 com\lin\opush\service\flowControl\impl\RequestNumRateLimitStrategyService.class
 com\lin\opush\config\ProcessThreadPoolConfig.class
