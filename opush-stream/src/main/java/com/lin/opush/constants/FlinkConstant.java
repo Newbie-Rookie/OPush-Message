@@ -18,13 +18,13 @@ public class FlinkConstant {
      */
     public static final String GROUP_ID = "opushLogGroupId";
     public static final String TOPIC_NAME = "opushTraceLog";
-    public static final String BROKER = "110.40.150.166:9092";
+    public static final String BROKER = "";
 
     /**
      * Redis配置
      */
-    public static final String REDIS_IP = "110.40.150.166";
-    public static final String REDIS_PORT = "6379";
-    public static final String REDIS_PASSWORD = "202754";
+    public static final String REDIS_IP = "";
+    public static final String REDIS_PORT = "";
+    public static final String REDIS_PASSWORD = "";
     public static final Integer REDIS_DATABASE = 1;
 }
