@@ -166,10 +166,13 @@ public class DataTraceServiceImpl implements DataTraceService {
     public EchartsDataVo getTraceMessageTemplateInfo(DataTraceParam dataTraceParam) {
         // 获取businessId并获取模板信息
         String businessId = getRealBusinessId(dataTraceParam.getBusinessId());
+        if (OpushConstant.BUSINESS_ID_LENGTH != businessId.length()) {
+            return EchartsDataVo.builder().build();
+        }
         Optional<MessageTemplate> optional = messageTemplateDao.findById(
                 TaskInfoUtils.getMessageTemplateIdFromBusinessId(Long.valueOf(businessId)));
         if (!optional.isPresent()) {
-            return null;
+            return EchartsDataVo.builder().build();
         }
         /**
          * 获取Redis中清洗好的数据

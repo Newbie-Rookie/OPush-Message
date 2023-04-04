@@ -29,10 +29,10 @@ public class OpushConstant {
      * 目前项目toC，后续可能会开发为toB，即由企业自己部署并添加渠道账号
      */
     // 默认创建者和更新者
-    public static final String DEFAULT_CREATOR = "opush";
-    public static final String DEFAULT_UPDATOR = "opush";
+    public static final String DEFAULT_CREATOR = "OPush";
+    public static final String DEFAULT_UPDATOR = "OPush";
     // 默认业务方
-    public static final String DEFAULT_TEAM = "opush公众号";
+    public static final String DEFAULT_TEAM = "OPush公众号";
     // 默认审核者
-    public static final String DEFAULT_AUDITOR = "opush";
+    public static final String DEFAULT_AUDITOR = "OPush";
 }

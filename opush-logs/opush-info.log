@@ -1,8 +1,102 @@
-2023-04-04 00:07:24.792 [lettuce-eventExecutorLoop-1-6] INFO  io.lettuce.core.protocol.ConnectionWatchdog >> Reconnecting, last destination was opush.redis:6379
-2023-04-04 00:07:24.792 [lettuce-eventExecutorLoop-1-7] INFO  io.lettuce.core.protocol.ConnectionWatchdog >> Reconnecting, last destination was opush.redis:6379
-2023-04-04 00:07:27.025 [Druid-ConnectionPool-Create-551377008] INFO  com.alibaba.druid.pool.DruidAbstractDataSource >> {dataSource-1} failContinuous is true
-2023-04-04 00:07:31.263 [lettuce-eventExecutorLoop-1-2] INFO  io.lettuce.core.protocol.ConnectionWatchdog >> Reconnecting, last destination was opush.redis:6379
-2023-04-04 00:07:31.501 [lettuce-eventExecutorLoop-1-3] INFO  io.lettuce.core.protocol.ConnectionWatchdog >> Reconnecting, last destination was opush.redis:6379
-2023-04-04 00:07:35.657 [lettuce-nioEventLoop-6-2] INFO  io.lettuce.core.protocol.ReconnectionHandler >> Reconnected to opush.redis:6379
-2023-04-04 00:07:35.819 [lettuce-nioEventLoop-6-3] INFO  io.lettuce.core.protocol.ReconnectionHandler >> Reconnected to opush.redis:6379
-2023-04-04 00:07:37.269 [Druid-ConnectionPool-Create-551377008] INFO  com.alibaba.druid.pool.DruidAbstractDataSource >> {dataSource-1} failContinuous is false
+2023-04-04 19:59:02.748 [main] INFO  com.lin.opush.OpushApplication >> Starting OpushApplication using Java 1.8.0_241 on LAPTOP-UHQKKGQO with PID 24116 (C:\Users\a\Desktop\OPush-Message\opush-web\target\classes started by a in C:\Users\a\Desktop\OPush-Message)
+2023-04-04 19:59:02.769 [main] INFO  com.lin.opush.OpushApplication >> The following 1 profile is active: "dev"
+2023-04-04 19:59:05.125 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate >> Multiple Spring Data modules found, entering strict repository configuration mode
+2023-04-04 19:59:05.126 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate >> Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2023-04-04 19:59:05.365 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate >> Finished Spring Data repository scanning in 222 ms. Found 4 JPA repository interfaces.
+2023-04-04 19:59:05.394 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate >> Multiple Spring Data modules found, entering strict repository configuration mode
+2023-04-04 19:59:05.397 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate >> Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2023-04-04 19:59:05.465 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport >> Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.lin.opush.dao.ChannelAccountDao; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2023-04-04 19:59:05.466 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport >> Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.lin.opush.dao.MessageTemplateDao; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2023-04-04 19:59:05.467 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport >> Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.lin.opush.dao.SmsRecordDao; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2023-04-04 19:59:05.468 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport >> Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.lin.opush.dao.UserDao; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2023-04-04 19:59:05.469 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate >> Finished Spring Data repository scanning in 50 ms. Found 0 Redis repository interfaces.
+2023-04-04 19:59:05.971 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker >> Bean 'groupIdEnhancer' of type [com.lin.opush.receiver.kafka.StartKafkaReceiver$$Lambda$470/992217213] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2023-04-04 19:59:06.203 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker >> Bean 'com.dtp.starter.common.autoconfigure.BaseBeanAutoConfiguration' of type [com.dtp.starter.common.autoconfigure.BaseBeanAutoConfiguration$$EnhancerBySpringCGLIB$$b0bee7ef] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2023-04-04 19:59:06.897 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer >> Tomcat initialized with port(s): 8080 (http)
+2023-04-04 19:59:06.917 [main] INFO  org.apache.coyote.http11.Http11NioProtocol >> Initializing ProtocolHandler ["http-nio-8080"]
+2023-04-04 19:59:06.919 [main] INFO  org.apache.catalina.core.StandardService >> Starting service [Tomcat]
+2023-04-04 19:59:06.919 [main] INFO  org.apache.catalina.core.StandardEngine >> Starting Servlet engine: [Apache Tomcat/9.0.70]
+2023-04-04 19:59:07.203 [main] INFO  o.a.c.core.ContainerBase.[Tomcat].[localhost].[/] >> Initializing Spring embedded WebApplicationContext
+2023-04-04 19:59:07.204 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext >> Root WebApplicationContext: initialization completed in 3926 ms
+2023-04-04 19:59:07.354 [main] INFO  c.a.d.s.b.a.DruidDataSourceAutoConfigure >> Init DruidDataSource
+2023-04-04 19:59:07.654 [main] INFO  com.alibaba.druid.pool.DruidDataSource >> {dataSource-1} inited
+2023-04-04 19:59:07.658 [Druid-ConnectionPool-Create-863313225] INFO  com.alibaba.druid.pool.DruidAbstractDataSource >> {dataSource-1} failContinuous is true
+2023-04-04 19:59:07.740 [main] INFO  org.apache.catalina.core.StandardService >> Stopping service [Tomcat]
+2023-04-04 19:59:07.774 [main] INFO  o.s.b.a.l.ConditionEvaluationReportLoggingListener >> 
+
+Error starting ApplicationContext. To display the conditions report re-run your application with 'debug' enabled.
+2023-04-04 20:00:02.468 [main] INFO  com.lin.opush.OpushApplication >> Starting OpushApplication using Java 1.8.0_241 on LAPTOP-UHQKKGQO with PID 22348 (C:\Users\a\Desktop\OPush-Message\opush-web\target\classes started by a in C:\Users\a\Desktop\OPush-Message)
+2023-04-04 20:00:02.476 [main] INFO  com.lin.opush.OpushApplication >> The following 1 profile is active: "dev"
+2023-04-04 20:00:04.479 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate >> Multiple Spring Data modules found, entering strict repository configuration mode
+2023-04-04 20:00:04.480 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate >> Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2023-04-04 20:00:04.707 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate >> Finished Spring Data repository scanning in 213 ms. Found 4 JPA repository interfaces.
+2023-04-04 20:00:04.729 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate >> Multiple Spring Data modules found, entering strict repository configuration mode
+2023-04-04 20:00:04.733 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate >> Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2023-04-04 20:00:04.796 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport >> Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.lin.opush.dao.ChannelAccountDao; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2023-04-04 20:00:04.797 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport >> Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.lin.opush.dao.MessageTemplateDao; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2023-04-04 20:00:04.798 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport >> Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.lin.opush.dao.SmsRecordDao; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2023-04-04 20:00:04.799 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport >> Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.lin.opush.dao.UserDao; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2023-04-04 20:00:04.799 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate >> Finished Spring Data repository scanning in 51 ms. Found 0 Redis repository interfaces.
+2023-04-04 20:00:05.254 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker >> Bean 'groupIdEnhancer' of type [com.lin.opush.receiver.kafka.StartKafkaReceiver$$Lambda$470/1106510750] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2023-04-04 20:00:05.461 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker >> Bean 'com.dtp.starter.common.autoconfigure.BaseBeanAutoConfiguration' of type [com.dtp.starter.common.autoconfigure.BaseBeanAutoConfiguration$$EnhancerBySpringCGLIB$$2e66829e] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2023-04-04 20:00:06.065 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer >> Tomcat initialized with port(s): 8080 (http)
+2023-04-04 20:00:06.084 [main] INFO  org.apache.coyote.http11.Http11NioProtocol >> Initializing ProtocolHandler ["http-nio-8080"]
+2023-04-04 20:00:06.085 [main] INFO  org.apache.catalina.core.StandardService >> Starting service [Tomcat]
+2023-04-04 20:00:06.086 [main] INFO  org.apache.catalina.core.StandardEngine >> Starting Servlet engine: [Apache Tomcat/9.0.70]
+2023-04-04 20:00:06.342 [main] INFO  o.a.c.core.ContainerBase.[Tomcat].[localhost].[/] >> Initializing Spring embedded WebApplicationContext
+2023-04-04 20:00:06.343 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext >> Root WebApplicationContext: initialization completed in 3465 ms
+2023-04-04 20:00:06.488 [main] INFO  c.a.d.s.b.a.DruidDataSourceAutoConfigure >> Init DruidDataSource
+2023-04-04 20:00:06.731 [main] INFO  com.alibaba.druid.pool.DruidDataSource >> {dataSource-1} inited
+2023-04-04 20:00:06.735 [Druid-ConnectionPool-Create-219186182] INFO  com.alibaba.druid.pool.DruidAbstractDataSource >> {dataSource-1} failContinuous is true
+2023-04-04 20:00:06.802 [main] INFO  org.apache.catalina.core.StandardService >> Stopping service [Tomcat]
+2023-04-04 20:00:06.835 [main] INFO  o.s.b.a.l.ConditionEvaluationReportLoggingListener >> 
+
+Error starting ApplicationContext. To display the conditions report re-run your application with 'debug' enabled.
+2023-04-04 20:04:22.991 [main] INFO  com.lin.opush.OpushApplication >> Starting OpushApplication using Java 1.8.0_241 on LAPTOP-UHQKKGQO with PID 23648 (C:\Users\a\Desktop\OPush-Message\opush-web\target\classes started by a in C:\Users\a\Desktop\OPush-Message)
+2023-04-04 20:04:23.005 [main] INFO  com.lin.opush.OpushApplication >> The following 1 profile is active: "dev"
+2023-04-04 20:04:25.040 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate >> Multiple Spring Data modules found, entering strict repository configuration mode
+2023-04-04 20:04:25.041 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate >> Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2023-04-04 20:04:25.263 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate >> Finished Spring Data repository scanning in 210 ms. Found 4 JPA repository interfaces.
+2023-04-04 20:04:25.284 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate >> Multiple Spring Data modules found, entering strict repository configuration mode
+2023-04-04 20:04:25.287 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate >> Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2023-04-04 20:04:25.353 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport >> Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.lin.opush.dao.ChannelAccountDao; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2023-04-04 20:04:25.354 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport >> Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.lin.opush.dao.MessageTemplateDao; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2023-04-04 20:04:25.355 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport >> Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.lin.opush.dao.SmsRecordDao; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2023-04-04 20:04:25.356 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport >> Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.lin.opush.dao.UserDao; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2023-04-04 20:04:25.357 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate >> Finished Spring Data repository scanning in 51 ms. Found 0 Redis repository interfaces.
+2023-04-04 20:04:25.814 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker >> Bean 'groupIdEnhancer' of type [com.lin.opush.receiver.kafka.StartKafkaReceiver$$Lambda$470/2115368148] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2023-04-04 20:04:26.001 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker >> Bean 'com.dtp.starter.common.autoconfigure.BaseBeanAutoConfiguration' of type [com.dtp.starter.common.autoconfigure.BaseBeanAutoConfiguration$$EnhancerBySpringCGLIB$$65eb5394] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2023-04-04 20:04:26.591 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer >> Tomcat initialized with port(s): 8080 (http)
+2023-04-04 20:04:26.609 [main] INFO  org.apache.coyote.http11.Http11NioProtocol >> Initializing ProtocolHandler ["http-nio-8080"]
+2023-04-04 20:04:26.611 [main] INFO  org.apache.catalina.core.StandardService >> Starting service [Tomcat]
+2023-04-04 20:04:26.611 [main] INFO  org.apache.catalina.core.StandardEngine >> Starting Servlet engine: [Apache Tomcat/9.0.70]
+2023-04-04 20:04:26.883 [main] INFO  o.a.c.core.ContainerBase.[Tomcat].[localhost].[/] >> Initializing Spring embedded WebApplicationContext
+2023-04-04 20:04:26.884 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext >> Root WebApplicationContext: initialization completed in 3440 ms
+2023-04-04 20:04:27.006 [main] INFO  c.a.d.s.b.a.DruidDataSourceAutoConfigure >> Init DruidDataSource
+2023-04-04 20:04:32.797 [main] INFO  com.alibaba.druid.pool.DruidDataSource >> {dataSource-1} inited
+2023-04-04 20:04:33.302 [main] INFO  org.hibernate.jpa.internal.util.LogHelper >> HHH000204: Processing PersistenceUnitInfo [name: default]
+2023-04-04 20:04:33.479 [main] INFO  org.hibernate.Version >> HHH000412: Hibernate ORM core version 5.6.14.Final
+2023-04-04 20:04:33.843 [main] INFO  org.hibernate.annotations.common.Version >> HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2023-04-04 20:04:34.175 [main] INFO  org.hibernate.dialect.Dialect >> HHH000400: Using dialect: org.hibernate.dialect.MySQL8Dialect
+2023-04-04 20:04:35.574 [main] INFO  o.h.e.t.jta.platform.internal.JtaPlatformInitiator >> HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-04-04 20:04:35.609 [main] INFO  o.s.orm.jpa.LocalContainerEntityManagerFactoryBean >> Initialized JPA EntityManagerFactory for persistence unit 'default'
+2023-04-04 20:04:39.838 [main] INFO  com.dtp.core.support.DtpBannerPrinter >> 
+|  __ \                            (_) |__   __|   
+| |  | |_   _ _ __   __ _ _ __ ___  _  ___| |_ __  
+| |  | | | | | '_ \ / _` | '_ ` _ \| |/ __| | '_ \ 
+| |__| | |_| | | | | (_| | | | | | | | (__| | |_) |
+|_____/ \__, |_| |_|\__,_|_| |_| |_|_|\___|_| .__/ 
+         __/ |                              | |    
+        |___/                               |_|    
+[32m :: Dynamic Thread Pool :: [39;2;0;39m
+2023-04-04 20:04:40.460 [main] INFO  o.s.b.actuate.endpoint.web.EndpointLinksResolver >> Exposing 1 endpoint(s) beneath base path '/actuator'
+2023-04-04 20:04:40.502 [main] INFO  com.xxl.job.core.executor.XxlJobExecutor >> >>>>>>>>>>> xxl-job register jobhandler success, name:opushJob, jobHandler:com.xxl.job.core.handler.impl.MethodJobHandler@3a2b1f24[class com.lin.opush.process.TimedJobProcessor#processTimedJob]
+2023-04-04 20:04:41.842 [Thread-38] INFO  com.xxl.job.core.server.EmbedServer >> >>>>>>>>>>> xxl-job remoting server start success, nettype = class com.xxl.job.core.server.EmbedServer, port = 9999
+2023-04-04 20:04:42.775 [main] INFO  org.apache.coyote.http11.Http11NioProtocol >> Starting ProtocolHandler ["http-nio-8080"]
+2023-04-04 20:04:42.801 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer >> Tomcat started on port(s): 8080 (http) with context path ''
+2023-04-04 20:04:42.818 [main] INFO  com.lin.opush.OpushApplication >> Started OpushApplication in 21.022 seconds (JVM running for 23.213)
+2023-04-04 20:04:45.938 [RMI TCP Connection(5)-192.168.137.1] INFO  o.a.c.core.ContainerBase.[Tomcat].[localhost].[/] >> Initializing Spring DispatcherServlet 'dispatcherServlet'
+2023-04-04 20:04:45.939 [RMI TCP Connection(5)-192.168.137.1] INFO  org.springframework.web.servlet.DispatcherServlet >> Initializing Servlet 'dispatcherServlet'
+2023-04-04 20:04:45.942 [RMI TCP Connection(5)-192.168.137.1] INFO  org.springframework.web.servlet.DispatcherServlet >> Completed initialization in 2 ms
+2023-04-04 20:06:59.964 [http-nio-8080-exec-6] INFO  com.lin.opush.service.impl.UserServiceImpl >> 发送验证码 → 13502683078 : 628546
+2023-04-04 20:07:09.504 [http-nio-8080-exec-8] INFO  com.lin.opush.service.impl.UserServiceImpl >> 用户 13502683078 登录

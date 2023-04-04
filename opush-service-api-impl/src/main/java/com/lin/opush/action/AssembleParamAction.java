@@ -51,7 +51,7 @@ public class AssembleParamAction implements ExecutionAction<SendTaskModel> {
             // 根据模板id查询数据库中完整模板信息
             Optional<MessageTemplate> messageTemplate = messageTemplateDao.findById(messageTemplateId);
             // 模板id对应模板是否存在（messageTemplate不为空且isDeleted属性为0(未删除)）
-            if (!messageTemplate.isPresent() || messageTemplate.get().getIsDeleted().equals(CommonConstant.TRUE)) {
+            if (!messageTemplate.isPresent()) {
                 context.setNeedBreak(true).setResponse(BasicResultVO.fail(RespStatusEnum.TEMPLATE_NOT_FOUND));
                 return;
             }

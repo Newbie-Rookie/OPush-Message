@@ -4,8 +4,11 @@ import cn.hutool.core.util.StrUtil;
 import com.lin.opush.domain.ChannelAccount;
 import com.lin.opush.service.ChannelAccountService;
 import com.lin.opush.utils.Convert4Amis;
+import com.lin.opush.vo.ChannelAccountParam;
+import com.lin.opush.vo.ChannelAccountVo;
 import com.lin.opush.vo.amis.CommonAmisVo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
@@ -24,13 +27,14 @@ public class ChannelAccountController {
 
     /**
      * 根据渠道标识获取渠道账号列表
-     * 目前短信、邮件渠道账号由官方提供，微信小程序等其他渠道账号由个人提供
+     * 目前短信、邮件渠道账号由官方【OPush】提供，微信小程序等其他渠道账号由个人【creator】提供
      * @param channelType 渠道类型
      * @return
      */
     @GetMapping("/queryByChannelType/{channelType}")
-    public List<CommonAmisVo> query(@PathVariable("channelType") Integer channelType) {
-        List<ChannelAccount> channelAccounts = channelAccountService.queryByChannelType(channelType);
+    public List<CommonAmisVo> query(@PathVariable("channelType") Integer channelType, String creator) {
+        List<ChannelAccount> channelAccounts = channelAccountService
+                                                .queryByChannelType(channelType, creator);
         return Convert4Amis.getChannelAccountVo(channelAccounts, channelType);
     }
 
@@ -51,17 +55,19 @@ public class ChannelAccountController {
      */
     @PostMapping("/save")
     public ChannelAccount saveOrUpdate(@RequestBody ChannelAccount channelAccount) {
-        return channelAccountService.save(channelAccount);
+        return channelAccountService.saveOrUpdate(channelAccount);
     }
 
     /**
      * 获取个人创建的渠道账号列表
-     * @param creator 创建者
-     * @return
+     * @param channelAccountParam 渠道账号列表请求参数
+     * @return 渠道账号VO
      */
     @GetMapping("/list")
-    public List<ChannelAccount> list(String creator) {
-        return channelAccountService.list(creator);
+    public ChannelAccountVo queryList(ChannelAccountParam channelAccountParam) {
+        Page<ChannelAccount> channelAccounts = channelAccountService.queryList(channelAccountParam);
+        List<Map<String, Object>> result = Convert4Amis.flatListMap(channelAccounts.toList());
+        return ChannelAccountVo.builder().count(channelAccounts.getTotalElements()).rows(result).build();
     }
 
     /**
@@ -71,19 +77,10 @@ public class ChannelAccountController {
     @DeleteMapping("/delete/{id}")
     public void deleteByIds(@PathVariable("id") String id) {
         if (StrUtil.isNotBlank(id)) {
-            List<Long> idList = Arrays.stream(id.split(StrUtil.COMMA)).map(Long::valueOf).collect(Collectors.toList());
+            List<Long> idList = Arrays.stream(id.split(StrUtil.COMMA))
+                                                    .map(Long::valueOf)
+                                                    .collect(Collectors.toList());
             channelAccountService.deleteByIds(idList);
         }
     }
-
-//    /**
-//     * 根据渠道标识查询渠道账号相关的信息
-//     * 后续可能会推出toB版本，由用户添加自己渠道账号
-//     */
-//    @GetMapping("/query")
-//    public List<CommonAmisVo> query(Integer channelType, String creator) {
-//        creator = StrUtil.isBlank(creator) ? OpushConstant.DEFAULT_CREATOR : creator;
-//        List<ChannelAccount> channelAccounts = channelAccountService.queryByChannelType(channelType, creator);
-//        return Convert4Amis.getChannelAccountVo(channelAccounts, channelType);
-//    }
 }

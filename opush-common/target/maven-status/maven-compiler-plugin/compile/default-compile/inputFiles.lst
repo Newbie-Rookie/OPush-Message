@@ -16,7 +16,6 @@ C:\Users\a\Desktop\OPush-Message\opush-common\src\main\java\com\lin\opush\dto\ac
 C:\Users\a\Desktop\OPush-Message\opush-common\src\main\java\com\lin\opush\dto\account\wechat\EnterpriseWeChatRobotAccount.java
 C:\Users\a\Desktop\OPush-Message\opush-common\src\main\java\com\lin\opush\dto\model\ImContentModel.java
 C:\Users\a\Desktop\OPush-Message\opush-common\src\main\java\com\lin\opush\dto\account\wechat\WeChatMiniProgramAccount.java
-C:\Users\a\Desktop\OPush-Message\opush-common\src\main\java\com\lin\opush\constants\LoadBalanceConstant.java
 C:\Users\a\Desktop\OPush-Message\opush-common\src\main\java\com\lin\opush\dto\account\push\GeTuiAccount.java
 C:\Users\a\Desktop\OPush-Message\opush-common\src\main\java\com\lin\opush\enums\ChannelType.java
 C:\Users\a\Desktop\OPush-Message\opush-common\src\main\java\com\lin\opush\dto\model\AlipayMiniProgramContentModel.java

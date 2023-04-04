@@ -28,7 +28,6 @@ CREATE TABLE `message_template`
     `auditor`          varchar(45) COLLATE utf8mb4_unicode_ci  NOT NULL DEFAULT '' COMMENT '审核人',
     `team`             varchar(45) COLLATE utf8mb4_unicode_ci  NOT NULL DEFAULT '' COMMENT '业务方团队',
     `proposer`         varchar(45) COLLATE utf8mb4_unicode_ci  NOT NULL DEFAULT '' COMMENT '业务方',
-    `is_deleted`       tinyint(4) NOT NULL DEFAULT '0' COMMENT '是否删除：0.不删除 1.删除',
     `created`          int(11) NOT NULL DEFAULT '0' COMMENT '创建时间',
     `updated`          int(11) NOT NULL DEFAULT '0' COMMENT '更新时间',
     PRIMARY KEY (`id`),
@@ -73,7 +72,6 @@ CREATE TABLE `tb_channelAccount`
     `creator`        varchar(128) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'opush' COMMENT '拥有者',
     `created`        int(11) NOT NULL DEFAULT '0' COMMENT '创建时间',
     `updated`        int(11) NOT NULL DEFAULT '0' COMMENT '更新时间',
-    `is_deleted`     tinyint(4) NOT NULL DEFAULT '0' COMMENT '是否已删除：0.未删除 1.已删除',
     PRIMARY KEY (`id`),
     KEY              `idx_send_channel` (`send_channel`)
 ) ENGINE = InnoDB

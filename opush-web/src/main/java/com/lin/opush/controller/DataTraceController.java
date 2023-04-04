@@ -2,6 +2,7 @@ package com.lin.opush.controller;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
+import com.lin.opush.constants.RegexConstant;
 import com.lin.opush.domain.SmsRecord;
 import com.lin.opush.service.DataTraceService;
 import com.lin.opush.utils.Convert4Amis;
@@ -18,6 +19,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+
+import static com.lin.opush.constants.RegexConstant.PHONE_REGEX;
 
 /**
  * 数据全链路追踪控制器
@@ -69,7 +72,9 @@ public class DataTraceController {
     @PostMapping("/messageTemplate")
     public EchartsDataVo getMessageTemplateData(@RequestBody DataTraceParam dataTraceParam) {
         EchartsDataVo echartsVo = EchartsDataVo.builder().build();
-        if (StrUtil.isNotBlank(dataTraceParam.getBusinessId())) {
+        if (StrUtil.isNotBlank(dataTraceParam.getBusinessId()) &&
+                (dataTraceParam.getBusinessId().matches(RegexConstant.MESSAGE_TEMPLATE_REGEX) ||
+                        dataTraceParam.getBusinessId().matches(RegexConstant.BUSINESSID_REGEX))) {
             echartsVo = dataTraceService.getTraceMessageTemplateInfo(dataTraceParam);
         }
         return echartsVo;

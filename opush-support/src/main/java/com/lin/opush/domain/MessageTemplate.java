@@ -23,6 +23,9 @@ import java.io.Serializable;
 // 开启链式访问，即生成setter方法由返回void变为返回this
 @Accessors(chain = true)
 public class MessageTemplate implements Serializable {
+    /**
+     * 模板Id
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -118,11 +121,6 @@ public class MessageTemplate implements Serializable {
      * 业务方
      */
     private String proposer;
-
-    /**
-     * 是否删除（0：未删除，1：已删除）
-     */
-    private Integer isDeleted;
 
     /**
      * 创建时间（单位s）

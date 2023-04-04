@@ -251,8 +251,7 @@ public class TencentSmsScript implements SmsScript {
     public void sendLoginSms(LoginUser loginUser){
         try {
             // 获取渠道账号配置
-            ChannelAccount channelAccount = channelAccountDao
-                    .findByNameEqualsAndIsDeletedEquals(SMS_SUPPLIER, CommonConstant.FALSE);
+            ChannelAccount channelAccount = channelAccountDao.findByNameEquals(SMS_SUPPLIER);
             TencentSmsAccount account = JSON.parseObject(channelAccount.getAccountConfig(), TencentSmsAccount.class);
             // 初始化发送短信客户端
             SmsClient client = initClient(account);

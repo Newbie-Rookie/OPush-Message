@@ -9,13 +9,13 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * 消息模板列表的Vo
+ * 渠道账号列表的Vo
  */
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class MessageTemplateVo {
+public class ChannelAccountVo {
     /**
      * 返回List列表
      */

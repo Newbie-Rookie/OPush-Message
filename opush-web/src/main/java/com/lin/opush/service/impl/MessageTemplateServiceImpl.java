@@ -5,7 +5,6 @@ import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.serializer.SerializerFeature;
-import com.lin.opush.constants.CommonConstant;
 import com.lin.opush.constants.OpushConstant;
 import com.lin.opush.dao.MessageTemplateDao;
 import com.lin.opush.domain.MessageTemplate;
@@ -96,7 +95,6 @@ public class MessageTemplateServiceImpl implements MessageTemplateService {
             if (StrUtil.isNotBlank(param.getMsgType())) {
                 predicateList.add(criteriaBuilder.equal(root.get("msgType").as(String.class), param.getMsgType()));
             }
-            predicateList.add(criteriaBuilder.equal(root.get("isDeleted").as(Integer.class), CommonConstant.FALSE));
             predicateList.add(criteriaBuilder.equal(root.get("creator").as(String.class), param.getCreator()));
             Predicate[] predicate = new Predicate[predicateList.size()];
             // 执行分页查询
@@ -147,9 +145,7 @@ public class MessageTemplateServiceImpl implements MessageTemplateService {
                 .setAuditor(StrUtil.isBlank(messageTemplate.getAuditor()) ?
                                             OpushConstant.DEFAULT_AUDITOR : messageTemplate.getAuditor())
                 // 设置创建时间【当前时间】
-                .setCreated(Math.toIntExact(DateUtil.currentSeconds()))
-                // 设置为未删除【0】
-                .setIsDeleted(CommonConstant.FALSE);
+                .setCreated(Math.toIntExact(DateUtil.currentSeconds()));
     }
 
     /**
@@ -218,15 +214,13 @@ public class MessageTemplateServiceImpl implements MessageTemplateService {
     @Override
     public void deleteByIds(List<Long> ids) {
         Iterable<MessageTemplate> messageTemplates = messageTemplateDao.findAllById(ids);
-        // 将所有消息模板的isDeleted属性置为1，表示该消息模板已删除（软删除）
-        messageTemplates.forEach(messageTemplate -> messageTemplate.setIsDeleted(CommonConstant.TRUE));
         for (MessageTemplate messageTemplate : messageTemplates) {
             // 若模板为定时任务类型且存在定时任务【定时任务id不为空】，需删除对应定时任务
             if (Objects.nonNull(messageTemplate.getTimedJobId()) && messageTemplate.getTimedJobId() > 0) {
                 xxlJobService.deleteTimedJob(messageTemplate.getTimedJobId());
             }
         }
-        messageTemplateDao.saveAll(messageTemplates);
+        messageTemplateDao.deleteAllById(ids);
     }
 
     /**

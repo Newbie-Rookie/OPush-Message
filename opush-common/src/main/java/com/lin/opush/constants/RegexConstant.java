@@ -10,4 +10,8 @@ public class RegexConstant {
     public static final String CODE_REGEX = "^\\d{6}$";
     // 邮箱
     public static final String EMAIL_REGEX = "^[A-Za-z0-9-_\\u4e00-\\u9fa5]+@[a-zA-Z0-9_-]+(\\.[a-zA-Z0-9_-]+)+$";
+    // 匹配1~6位模板ID
+    public static final String MESSAGE_TEMPLATE_REGEX = "^\\d{1,6}$";
+    // 匹配16位业务ID
+    public static final String BUSINESSID_REGEX = "^\\d{16}$";
 }

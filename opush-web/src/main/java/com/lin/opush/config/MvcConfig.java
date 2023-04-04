@@ -29,6 +29,22 @@ public class MvcConfig implements WebMvcConfigurer {
      *      (2)过滤器会在拦截器链执行前就对请求进行处理，添加一个进行跨域处理的过滤器CorsFilter，
      *          Spring为我们提供了这样一个过滤器CorsFilter
      */
+    /**
+     * 登录拦截器和刷新token拦截器
+     * @param registry
+     */
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        // 登录拦截器
+        registry.addInterceptor(new LoginInterceptor())
+                .excludePathPatterns(
+                        "/user/code",
+                        "/user/login",
+                        "/messageTemplate/receipt"
+                ).order(1);
+        // 刷新token拦截器
+        registry.addInterceptor(new RefreshTokenInterceptor(stringRedisTemplate)).addPathPatterns("/**").order(0);
+    }
 
     /**
      * 跨域配置
@@ -49,21 +65,4 @@ public class MvcConfig implements WebMvcConfigurer {
 //                // 设置跨域允许时间
 //                .maxAge(3600);
 //    }
-
-    /**
-     * 登录拦截器和刷新token拦截器
-     * @param registry
-     */
-    @Override
-    public void addInterceptors(InterceptorRegistry registry) {
-        // 登录拦截器
-        registry.addInterceptor(new LoginInterceptor())
-                .excludePathPatterns(
-                        "/user/code",
-                        "/user/login",
-                        "/messageTemplate/receipt"
-                ).order(1);
-        // 刷新token拦截器
-        registry.addInterceptor(new RefreshTokenInterceptor(stringRedisTemplate)).addPathPatterns("/**").order(0);
-    }
 }

@@ -25,10 +25,10 @@ services:
       # 在kafka集群中，每个kafka都有一个BROKER_ID来区分自己
       KAFKA_BROKER_ID: 0
       # TODO：设置kafka的ip
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://110.40.150.166:9092
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT:/服务器IP:服务端口
       # 配置kafka的监听端口
-      KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:9092
-      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:服务端口
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:服务端口
       KAFKA_CREATE_TOPICS: "hello_world"
       KAFKA_HEAP_OPTS: -Xmx1G -Xms256M
     # 映射端口
@@ -44,7 +44,7 @@ services:
     container_name: kafka-manager
     # 设置环境变量（相当于docker run命令中的-e）
     environment:
-      ZK_HOSTS: zookeeper:2181
+      ZK_HOSTS: zookeeper:服务端口
       APPLICATION_SECRET: xxxxx
       # 开启kafka-manager权限校验
       KAFKA_MANAGER_AUTH_ENABLED: "true"

@@ -10,6 +10,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.google.common.base.Throwables;
 import com.lin.opush.constants.ChannelAccountConstant;
 import com.lin.opush.constants.CommonConstant;
+import com.lin.opush.constants.OpushConstant;
 import com.lin.opush.dao.ChannelAccountDao;
 import com.lin.opush.domain.ChannelAccount;
 import com.lin.opush.dto.account.email.EmailAccount;
@@ -84,7 +85,7 @@ public class AccountUtils {
         try {
             // 根据发送渠道获取所有短信渠道账号
             List<ChannelAccount> channelAccountList = channelAccountDao
-                    .findAllBySendChannelEqualsAndIsDeletedEquals(ChannelType.SMS.getCode(), CommonConstant.FALSE);
+                    .findAllBySendChannelEqualsAndCreatorEquals(ChannelType.SMS.getCode(), OpushConstant.DEFAULT_CREATOR);
             for (ChannelAccount channelAccount : channelAccountList) {
                 try {
                     // 根据scriptName(脚本名称)获取对应渠道账号
@@ -113,7 +114,8 @@ public class AccountUtils {
         try {
             // 根据发送渠道获取所有邮件渠道账号
             List<ChannelAccount> channelAccountList = channelAccountDao
-                    .findAllBySendChannelEqualsAndIsDeletedEquals(ChannelType.EMAIL.getCode(), CommonConstant.FALSE);
+                    .findAllBySendChannelEqualsAndCreatorEquals(
+                        ChannelType.EMAIL.getCode(), OpushConstant.DEFAULT_CREATOR);
             for (ChannelAccount channelAccount : channelAccountList) {
                 try {
                     // 根据supplierName(渠道商名称)获取对应渠道账号

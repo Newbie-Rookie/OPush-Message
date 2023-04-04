@@ -59,7 +59,6 @@ com\lin\opush\domain\AnchorInfo.class
 com\lin\opush\dto\model\PushContentModel$PushContentModelBuilder.class
 com\lin\opush\dto\model\EmailContentModel$EmailContentModelBuilder.class
 com\lin\opush\dto\model\WeChatMiniProgramContentModel.class
-com\lin\opush\constants\LoadBalanceConstant.class
 com\lin\opush\dto\model\DingDingRobotContentModel.class
 com\lin\opush\enums\IdType.class
 com\lin\opush\dto\account\sms\SmsAccount.class

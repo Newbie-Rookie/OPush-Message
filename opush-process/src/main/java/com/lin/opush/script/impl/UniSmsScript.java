@@ -170,8 +170,7 @@ public class UniSmsScript implements SmsScript {
     public void saveSmsReceipt(SmsReceipt receipt) {
         try {
             // 渠道账号信息【UniSMS对应的渠道账号信息】
-            ChannelAccount channelAccount = channelAccountDao
-                    .findByNameEqualsAndIsDeletedEquals(SMS_SUPPLIER, CommonConstant.FALSE);
+            ChannelAccount channelAccount = channelAccountDao.findByNameEquals(SMS_SUPPLIER);
             // 渠道账号配置
             UniSmsAccount account = accountUtils.getAccountById(channelAccount.getId(), UniSmsAccount.class);
             // 组装短信记录
