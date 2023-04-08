@@ -6,7 +6,7 @@ import com.alibaba.fastjson.JSON;
 import com.google.common.base.Throwables;
 import com.lin.opush.domain.MessageTemplate;
 import com.lin.opush.domain.TaskInfo;
-import com.lin.opush.dto.model.WeChatMiniProgramContentModel;
+import com.lin.opush.dto.model.wechat.WeChatMiniProgramContentModel;
 import com.lin.opush.enums.ChannelType;
 import com.lin.opush.process.BaseProcessor;
 import com.lin.opush.process.Processor;
@@ -26,11 +26,14 @@ import java.util.Set;
 @Component
 @Slf4j
 public class WeChatMiniProgramProcessor extends BaseProcessor implements Processor {
+    /**
+     * 渠道账号工具类
+     */
     @Autowired
     private AccountUtils accountUtils;
 
     public WeChatMiniProgramProcessor() {
-        channelTypeCode = ChannelType.MINI_PROGRAM.getCode();
+        channelTypeCode = ChannelType.WACHAT_MINI_PROGRAM.getCode();
     }
 
     /**
@@ -70,7 +73,8 @@ public class WeChatMiniProgramProcessor extends BaseProcessor implements Process
             WxMaSubscribeMessage subscribeMessage = WxMaSubscribeMessage.builder()
                                                     .toUser(openId).templateId(contentModel.getTemplateId())
                                                     .data(getWxMaTemplateData(contentModel.getMiniProgramParam()))
-                                                    .page(contentModel.getPage()).build();
+                                                    .page(contentModel.getPage())
+                                                    .miniprogramState("developer").build();
             messageList.add(subscribeMessage);
         }
         return messageList;
@@ -88,8 +92,6 @@ public class WeChatMiniProgramProcessor extends BaseProcessor implements Process
     }
 
     @Override
-    public void recall(MessageTemplate messageTemplate) {
-
-    }
+    public void recall(MessageTemplate messageTemplate) {}
 }
 

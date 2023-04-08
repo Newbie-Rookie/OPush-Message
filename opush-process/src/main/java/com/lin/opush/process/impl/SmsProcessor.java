@@ -11,7 +11,7 @@ import com.lin.opush.domain.SmsRecord;
 import com.lin.opush.domain.TaskInfo;
 import com.lin.opush.domain.sms.MessageTypeConfig;
 import com.lin.opush.domain.sms.SmsParam;
-import com.lin.opush.dto.model.SmsContentModel;
+import com.lin.opush.dto.model.sms.SmsContentModel;
 import com.lin.opush.enums.ChannelType;
 import com.lin.opush.process.BaseProcessor;
 import com.lin.opush.process.Processor;

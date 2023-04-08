@@ -1,6 +1,18 @@
 package com.lin.opush.enums;
 
 import com.lin.opush.dto.model.*;
+import com.lin.opush.dto.model.ali.AlipayMiniProgramContentModel;
+import com.lin.opush.dto.model.dingding.DingDingRobotContentModel;
+import com.lin.opush.dto.model.dingding.DingDingWorkInformContentModel;
+import com.lin.opush.dto.model.email.EmailContentModel;
+import com.lin.opush.dto.model.feishu.FeiShuRobotContentModel;
+import com.lin.opush.dto.model.im.ImContentModel;
+import com.lin.opush.dto.model.push.PushContentModel;
+import com.lin.opush.dto.model.sms.SmsContentModel;
+import com.lin.opush.dto.model.wechat.EnterpriseWeChatContentModel;
+import com.lin.opush.dto.model.wechat.EnterpriseWeChatRobotContentModel;
+import com.lin.opush.dto.model.wechat.WeChatMiniProgramContentModel;
+import com.lin.opush.dto.model.wechat.WeChatOfficialAccountsContentModel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.ToString;
@@ -32,15 +44,15 @@ public enum ChannelType {
     /**
      * officialAccounts(微信服务号) -- 官方测试账号
      */
-    OFFICIAL_ACCOUNT(50, "wechatOfficialAccounts「微信服务号」", WeChatOfficialAccountsContentModel.class, "wechat_official_accounts"),
+    WACHAT_OFFICIAL_ACCOUNT(50, "wechatOfficialAccounts「微信服务号」", WeChatOfficialAccountsContentModel.class, "wechat_official_accounts"),
     /**
      * miniProgram(微信小程序)
      */
-    MINI_PROGRAM(60, "wechatMiniProgram「微信小程序」", WeChatMiniProgramContentModel.class,"wechat_mini_program"),
+    WACHAT_MINI_PROGRAM(60, "wechatMiniProgram「微信小程序」", WeChatMiniProgramContentModel.class,"wechat_mini_program"),
     /**
      * enterpriseWeChat(企业微信)
      */
-    ENTERPRISE_WE_CHAT(70, "enterpriseWeChat「企业微信」", EnterpriseWeChatContentModel.class, "enterprise_wechat"),
+    ENTERPRISE_WECHAT(70, "enterpriseWeChat「企业微信」", EnterpriseWeChatContentModel.class, "enterprise_wechat"),
     /**
      * dingDingRobot(钉钉机器人)
      */
@@ -52,7 +64,7 @@ public enum ChannelType {
     /**
      * enterpriseWeChat(企业微信机器人)
      */
-    ENTERPRISE_WE_CHAT_ROBOT(100, "enterpriseWeChatRobot「企业微信机器人」", EnterpriseWeChatRobotContentModel.class, "enterprise_wechat_robot"),
+    ENTERPRISE_WECHAT_ROBOT(100, "enterpriseWeChatRobot「企业微信机器人」", EnterpriseWeChatRobotContentModel.class, "enterprise_wechat_robot"),
     /**
      * feiShuRoot(飞书机器人)
      */

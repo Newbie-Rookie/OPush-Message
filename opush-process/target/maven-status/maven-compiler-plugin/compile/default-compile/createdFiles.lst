@@ -29,6 +29,7 @@ com\lin\opush\service\deduplication\DeduplicationParam.class
 com\lin\opush\domain\sms\SmsReceipt.class
 com\lin\opush\utils\GroupIdMappingUtils.class
 com\lin\opush\service\deduplication\deduplicationParam\DeduplicationParamBuilder.class
+com\lin\opush\process\impl\WeChatOfficialAccountProcessor.class
 com\lin\opush\service\consume\ConsumeService.class
 com\lin\opush\domain\sms\SmsParam$SmsParamBuilder.class
 com\lin\opush\service\deduplication\deduplicationParam\FrequencyDeduplicationParamBuilder.class

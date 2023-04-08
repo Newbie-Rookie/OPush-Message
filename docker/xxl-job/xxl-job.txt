@@ -10,10 +10,4 @@ wget https://raw.githubusercontent.com/xuxueli/xxl-job/2.3.1/xxl-job-admin/src/m
 # 可通过启动容器时使用-e -e PARAMS='--spring.database.url...'修改数据库配置，但过于繁琐，故使用挂载数据卷和更改项目启动时读取新的配置文件的方式实现
 
 # 启动容器
-docker run
-    --name xxl-job-admin
-    -v /tmp:/data/applogs
-    -v /home/dockerfile/xxl-job.properties:/xxl-job.properties
-    -e PARAMS='--spring.config.location=/xxl-job.properties'
-    -p 8080:8080
-    -d xuxueli/xxl-job-admin:2.3.1
+docker run --name xxl-job-admin -v /tmp:/data/applogs -v /home/dockerfile/xxl-job.properties:/xxl-job.properties -e PARAMS='--spring.config.location=/xxl-job.properties' -p 6767:80 -d xuxueli/xxl-job-admin:2.3.1

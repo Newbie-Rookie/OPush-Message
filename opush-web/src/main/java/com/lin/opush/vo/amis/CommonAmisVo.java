@@ -104,13 +104,11 @@ public class CommonAmisVo {
          */
         @JSONField(name = "adaptor")
         private String adaptor;
-
         /**
          * adaptor
          */
         @JSONField(name = "requestAdaptor")
         private String requestAdaptor;
-
         /**
          * url
          */

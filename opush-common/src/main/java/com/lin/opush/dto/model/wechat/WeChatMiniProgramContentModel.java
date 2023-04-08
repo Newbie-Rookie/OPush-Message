@@ -1,5 +1,6 @@
-package com.lin.opush.dto.model;
+package com.lin.opush.dto.model.wechat;
 
+import com.lin.opush.dto.model.ContentModel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -9,6 +10,7 @@ import java.util.Map;
 
 /**
  * 微信小程序订阅信息内容模型
+ * https://developers.weixin.qq.com/miniprogram/dev/OpenApiDoc/mp-message-management/subscribe-message/sendMessage.html
  */
 @Data
 @Builder

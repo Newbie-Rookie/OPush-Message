@@ -1,5 +1,6 @@
-package com.lin.opush.dto.model;
+package com.lin.opush.dto.model.email;
 
+import com.lin.opush.dto.model.ContentModel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -17,12 +18,10 @@ public class EmailContentModel extends ContentModel {
      * 标题
      */
     private String title;
-
     /**
      * 内容(可写入HTML)
      */
     private String content;
-
     /**
      * 邮件附件链接
      */

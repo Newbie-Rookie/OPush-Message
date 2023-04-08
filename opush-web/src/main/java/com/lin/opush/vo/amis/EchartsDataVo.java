@@ -1,6 +1,7 @@
 package com.lin.opush.vo.amis;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import javafx.scene.layout.Background;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -58,13 +59,18 @@ public class EchartsDataVo {
     @Builder
     public static class TitleVO {
         /**
-         * 标题与左侧的距离
-         */
-        private String left;
-        /**
          * 标题文本
          */
         private String text;
+        /**
+         * 标题到左侧的距离
+         */
+        private String left;
+        /**
+         * 文本风格
+         */
+        @JsonProperty
+        private TextStyleVO textStyle;
     }
 
     /**
@@ -113,6 +119,16 @@ public class EchartsDataVo {
          * x轴上的数据
          */
         private List<String> data;
+        /**
+         * 坐标轴名称文本风格
+         */
+        @JsonProperty
+        private TextStyleVO nameTextStyle;
+        /**
+         * 坐标轴文本风格
+         */
+        @JsonProperty
+        private TextStyleVO axisLabel;
     }
 
     /**
@@ -129,6 +145,16 @@ public class EchartsDataVo {
          * y轴名称
          */
         private String name;
+        /**
+         * 坐标轴名称文本风格
+         */
+        @JsonProperty
+        private TextStyleVO nameTextStyle;
+        /**
+         * 坐标轴文本风格
+         */
+        @JsonProperty
+        private TextStyleVO axisLabel;
     }
 
     /**
@@ -149,5 +175,83 @@ public class EchartsDataVo {
          * data
          */
         private List<Integer> data;
+        /**
+         * 是否显示柱条的背景色
+         */
+        private Boolean showBackground;
+        /**
+         * 柱条背景样式
+         */
+        @JsonProperty
+        private BackgroundStyleVO backgroundStyle;
+        /**
+         * 柱条本体样式
+         */
+        @JsonProperty
+        private BackgroundStyleVO itemStyle;
+    }
+
+    /**
+     * 文本风格
+     */
+    @Data
+    @Builder
+    public static class TextStyleVO{
+        /**
+         * 文本颜色
+         */
+        private String color;
+        /**
+         * 文本粗细
+         */
+        private Integer fontWeight;
+        /**
+         * 文本大小
+         */
+        private Integer fontSize;
+    }
+
+    /**
+     * 柱条样式
+     */
+    @Data
+    @Builder
+    public static class BackgroundStyleVO{
+        /**
+         * 柱条的颜色
+         */
+        private String color;
+        /**
+         * 柱条的描边颜色
+         */
+        private String borderColor;
+        /**
+         * 柱条的描边宽度
+         */
+        private Integer borderWidth;
+        /**
+         * 圆角半径
+         */
+        private List<Integer> borderRadius;
+        /**
+         * 阴影的模糊大小
+         */
+        private Integer shadowBlur;
+        /**
+         * 阴影颜色
+         */
+        private String shadowColor;
+        /**
+         * 阴影水平方向上的偏移距离
+         */
+        private Integer shadowOffsetX;
+        /**
+         * 阴影垂直方向上的偏移距离
+         */
+        private Integer shadowOffsetY;
+        /**
+         * 图形透明度
+         */
+        private Integer opacity;
     }
 }

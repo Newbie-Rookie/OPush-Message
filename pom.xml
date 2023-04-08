@@ -36,6 +36,7 @@
         <maven.compiler.target>${target.java.version}</maven.compiler.target>
         <flink.version>1.14.3</flink.version>
         <scala.binary.version>2.11</scala.binary.version>
+        <weixin-java>4.4.0</weixin-java>
     </properties>
 
     <dependencyManagement>
@@ -154,7 +155,21 @@
             <dependency>
                 <groupId>com.github.binarywang</groupId>
                 <artifactId>weixin-java-miniapp</artifactId>
-                <version>4.4.0</version>
+                <version>${weixin-java}</version>
+            </dependency>
+
+            <!-- 微信服务号第三方SDK -->
+            <dependency>
+                <groupId>com.github.binarywang</groupId>
+                <artifactId>weixin-java-mp</artifactId>
+                <version>${weixin-java}</version>
+            </dependency>
+
+            <!-- 企业微信第三方SDK -->
+            <dependency>
+                <groupId>com.github.binarywang</groupId>
+                <artifactId>weixin-java-cp</artifactId>
+                <version>${weixin-java}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

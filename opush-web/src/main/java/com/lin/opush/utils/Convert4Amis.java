@@ -1,5 +1,6 @@
 package com.lin.opush.utils;
 
+import cn.hutool.core.collection.ListUtil;
 import me.chanjar.weixin.common.bean.subscribemsg.TemplateInfo;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.date.DatePattern;
@@ -19,6 +20,7 @@ import com.lin.opush.vo.amis.CommonAmisVo;
 import com.lin.opush.vo.amis.EchartsDataVo;
 import com.lin.opush.vo.amis.SmsDataVo;
 import lombok.extern.slf4j.Slf4j;
+import me.chanjar.weixin.mp.bean.template.WxMpTemplate;
 
 import java.lang.reflect.Field;
 import java.util.*;
@@ -311,18 +313,47 @@ public class Convert4Amis {
             }
         }
         // 标题
-        String title = "消息模板「" + templateName + "」在「" +
+        String title = "➢  模板「" + templateName + "」在「" +
                 DateUtil.format(
                         DateUtil.parse(
                                 String.valueOf(TaskInfoUtils.getDateFromBusinessId(Long.valueOf(businessId)))
                         ), DatePattern.CHINESE_DATE_FORMATTER
                 ) + "」的下发情况";
         return EchartsDataVo.builder()
-                .title(EchartsDataVo.TitleVO.builder().left("30%").text(title).build())
-                .legend(EchartsDataVo.LegendVO.builder().right("10%").data(Arrays.asList("人数")).build())
-                .xAxis(EchartsDataVo.XaxisVO.builder().type("category").name("下发情况").data(xAxisList).build())
-                .series(Arrays.asList(EchartsDataVo.SeriesVO.builder().name("人数").type("bar").data(actualData).build()))
-                .yAxis(EchartsDataVo.YaxisVO.builder().type("value").name("人数").build())
+                .title(EchartsDataVo.TitleVO.builder()
+                        .text(title).left("10%").textStyle(EchartsDataVo.TextStyleVO.builder()
+                                .color("rgba(255, 0, 0, 1)")
+                                .fontWeight(400).fontSize(16).build()).build())
+                .legend(EchartsDataVo.LegendVO.builder()
+                        .right("10%").data(Arrays.asList("发送量")).build())
+                .xAxis(EchartsDataVo.XaxisVO.builder().
+                        type("category").name("下发情况").data(xAxisList)
+                        .nameTextStyle(EchartsDataVo.TextStyleVO.builder()
+                                .color("rgba(255, 0, 0, 1)")
+                                .fontWeight(400).fontSize(13).build())
+                        .axisLabel(EchartsDataVo.TextStyleVO.builder()
+                                .color("rgba(102, 0, 255, 1)")
+                                .fontWeight(400).fontSize(14).build()).build())
+                .series(Arrays.asList(EchartsDataVo.SeriesVO.builder()
+                        .name("发送量").type("bar").data(actualData).showBackground(true)
+                        .backgroundStyle(EchartsDataVo.BackgroundStyleVO.builder()
+                                .opacity(0).build())
+//                        .backgroundStyle(EchartsDataVo.BackgroundStyleVO.builder()
+//                                .color("rgba(180, 180, 180, 0.2)").borderColor("rgba(255, 0, 0, 0.44)").borderWidth(1)
+//                                .borderRadius(Arrays.stream(new int[]{30, 30, 0, 0}).boxed().collect(Collectors.toList()))
+//                                .shadowColor("rgba(15, 1, 1, 1)").shadowBlur(10).shadowOffsetX(5).shadowOffsetY(-5).build())
+                        .itemStyle(EchartsDataVo.BackgroundStyleVO.builder()
+                                .color("rgba(102, 0, 255, 0.5)").borderColor("rgba(102, 0, 255, 0.5)").borderWidth(1)
+                                .borderRadius(Arrays.stream(new int[]{50, 50, 0, 0}).boxed().collect(Collectors.toList()))
+                                .shadowColor("rgba(15, 1, 1, 1)").shadowBlur(15).shadowOffsetX(5).shadowOffsetY(-5).build()).build()))
+                .yAxis(EchartsDataVo.YaxisVO.builder()
+                        .type("value").name("发送量")
+                        .nameTextStyle(EchartsDataVo.TextStyleVO.builder()
+                                .color("rgba(255, 0, 0, 1)")
+                                .fontWeight(400).fontSize(13).build())
+                        .axisLabel(EchartsDataVo.TextStyleVO.builder()
+                                .color("rgba(102, 0, 255, 1)")
+                                .fontWeight(400).fontSize(14).build()).build())
                 .tooltip(EchartsDataVo.TooltipVO.builder().build())
                 .build();
     }
@@ -331,33 +362,80 @@ public class Convert4Amis {
      * 适配amis前端，获取模板id对应模板详细信息【关键词】
      * @param wxTemplateId 模板id
      * @param templateList 模板列表
-     * @return
+     * @return 模板详细信息【关键词】
      */
     public static CommonAmisVo getWxMaTemplateParam(String wxTemplateId, List<TemplateInfo> templateList) {
-        // 模板参数
-        CommonAmisVo TemplateParam = null;
-        // 获取匹配模板id对应模板详细信息
-        for (TemplateInfo templateInfo : templateList) {
-            if (wxTemplateId.equals(templateInfo.getPriTmplId())) {
-                String[] data = templateInfo.getContent().split(StrUtil.LF);
-                // 封装表格（input-table：可增加一行、可编辑、可删除、无需确认操作）
-                TemplateParam = CommonAmisVo.builder()
-                                                .type("input-table").name("miniProgramParam")
-                                                .addable(true).editable(true).removable(true)
-                                                .needConfirm(true).build();
-                // 封装表格中列集合
-                List<CommonAmisVo.ColumnsDTO> columnsDtoS = new ArrayList<>();
-                for (String datum : data) {
-                    String name = datum.substring(datum.indexOf("{{") + 2, datum.indexOf("."));
-                    String label = datum.split(":")[0];
-                    // 多列输入框（必填、快速编辑）
-                    CommonAmisVo.ColumnsDTO columnsDTO = CommonAmisVo.ColumnsDTO.builder().name(name)
-                                .label(label).type("input-text").required(true).quickEdit(true).build();
-                    columnsDtoS.add(columnsDTO);
+        // 模板详细信息【关键词】
+        CommonAmisVo templateParam = null;
+        if (StrUtil.isNotBlank(wxTemplateId)
+                && !Objects.isNull(templateList) && (templateList.size() > 0)) {
+            // 获取匹配模板id对应模板详细信息【关键词】
+            for (TemplateInfo templateInfo : templateList) {
+                if (wxTemplateId.equals(templateInfo.getPriTmplId())) {
+                    String[] data = templateInfo.getContent().split(StrUtil.LF);
+                    // 封装表格（input-table：可增加一行、可编辑、可删除、无需确认操作）
+                    templateParam = CommonAmisVo.builder()
+                            .type("input-table").name("miniProgramParam")
+                            .addable(true).editable(true).removable(true)
+                            .needConfirm(true).build();
+                    // 封装表格中列集合
+                    List<CommonAmisVo.ColumnsDTO> columnsDtoS = new ArrayList<>();
+                    for (String datum : data) {
+                        String name = datum.substring(datum.indexOf("{{") + 2, datum.indexOf("."));
+                        String label = datum.split(":")[0];
+                        // 多列输入框（必填、快速编辑）
+                        CommonAmisVo.ColumnsDTO columnsDTO = CommonAmisVo.ColumnsDTO.builder()
+                                                            .name(name).label(label).type("input-text")
+                                                            .required(true).quickEdit(true).build();
+                        columnsDtoS.add(columnsDTO);
+                    }
+                    templateParam.setColumns(columnsDtoS);
                 }
-                TemplateParam.setColumns(columnsDtoS);
             }
         }
-        return TemplateParam;
+        return templateParam;
+    }
+
+    /**
+     * 适配amis前端，获取模板id对应模板详细信息【关键词】
+     * @param wxTemplateId 模板id
+     * @param allPrivateTemplate 模板列表
+     * @return 模板详细信息【关键词】
+     */
+    public static CommonAmisVo getWxMpTemplateParam(String wxTemplateId, List<WxMpTemplate> allPrivateTemplate) {
+        // 模板详细信息【关键词】
+        CommonAmisVo templateParam = null;
+        // 获取匹配模板id对应模板详细信息【关键词】
+        if (StrUtil.isNotBlank(wxTemplateId)
+                && !Objects.isNull(allPrivateTemplate) && (allPrivateTemplate.size() > 0)) {
+            for (WxMpTemplate wxMpTemplate : allPrivateTemplate) {
+                if (wxTemplateId.equals(wxMpTemplate.getTemplateId())) {
+                    String[] data = wxMpTemplate.getContent().split(StrUtil.LF);
+                    // 封装表格（input-table：可增加一行、可编辑、可删除、无需确认操作）
+                    templateParam = CommonAmisVo.builder()
+                            .type("input-table").name("officialAccountParam")
+                            .addable(true).editable(true).removable(true)
+                            .needConfirm(true).build();
+                    // 封装表格中列集合
+                    List<CommonAmisVo.ColumnsDTO> columnsDtoS = new ArrayList<>();
+                    for (String datum : data) {
+                        String name = datum.substring(datum.indexOf("{{") + 2, datum.indexOf("."));
+                        // 多列输入框（必填、快速编辑）
+                        CommonAmisVo.ColumnsDTO.ColumnsDTOBuilder dtoBuilder = CommonAmisVo.ColumnsDTO.builder()
+                                                    .name(name).type("input-text").required(true).quickEdit(true);
+                        if (datum.contains("first")) {
+                            dtoBuilder.label("名字");
+                        } else if (datum.contains("remark")) {
+                            dtoBuilder.label("备注");
+                        } else {
+                            dtoBuilder.label(datum.split("：")[0]);
+                        }
+                        columnsDtoS.add(dtoBuilder.build());
+                    }
+                    templateParam.setColumns(columnsDtoS);
+                }
+            }
+        }
+        return templateParam;
     }
 }

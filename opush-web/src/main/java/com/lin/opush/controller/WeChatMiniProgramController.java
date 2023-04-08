@@ -1,7 +1,7 @@
 package com.lin.opush.controller;
 
 import cn.binarywang.wx.miniapp.api.WxMaService;
-import cn.hutool.http.HttpUtil;
+import cn.hutool.core.util.StrUtil;
 import com.google.common.base.Throwables;
 import com.lin.opush.enums.RespStatusEnum;
 import com.lin.opush.exception.CommonException;
@@ -21,7 +21,7 @@ import java.util.List;
 import java.util.Objects;
 
 /**
- * 微信服务号
+ * 微信小程序
  */
 @Slf4j
 @RestController
@@ -44,50 +44,61 @@ public class WeChatMiniProgramController {
             List<CommonAmisVo> result = new ArrayList<>();
             // 微信小程序账号配置
             WxMaService wxMaService = accountUtils.getAccountById(id, WxMaService.class);
-            // 获取订阅消息配置对象，进而获取小程序帐号的个人模板列表
-            List<TemplateInfo> templateList = wxMaService.getSubscribeService().getTemplateList();
-            for (TemplateInfo templateInfo : templateList) {
-                // 模板名和模板ID
-                CommonAmisVo commonAmisVo = CommonAmisVo.builder()
-                                                        .label(templateInfo.getTitle())
-                                                        .value(templateInfo.getPriTmplId()).build();
-                result.add(commonAmisVo);
+            if(!Objects.isNull(wxMaService)){
+                // 获取订阅消息配置对象，进而获取小程序帐号的个人模板列表
+                List<TemplateInfo> templateList = wxMaService.getSubscribeService().getTemplateList();
+                for (TemplateInfo templateInfo : templateList) {
+                    // 模板名和模板ID
+                    CommonAmisVo commonAmisVo = CommonAmisVo.builder()
+                                                .label(templateInfo.getTitle())
+                                                .value(templateInfo.getPriTmplId()).build();
+                    result.add(commonAmisVo);
+                }
             }
             return result;
         } catch (Exception e) {
-            log.error("MiniProgramController#queryList fail:{}", Throwables.getStackTraceAsString(e));
+            log.error("WeChatMiniProgramController#queryList fail:{}", Throwables.getStackTraceAsString(e));
             throw new CommonException(RespStatusEnum.SERVICE_ERROR);
         }
     }
 
     /**
      * 根据小程序账号Id和模板Id获取对应模板详细信息【关键词】
+     * @param id 渠道账号Id
+     * @param wxTemplateId 模板Id
      * @return 模板Id对应模板详细信息【关键词】
      */
     @PostMapping("/detailTemplate")
     public CommonAmisVo queryDetailList(Long id, String wxTemplateId) {
-        if (Objects.isNull(id) || Objects.isNull(wxTemplateId)) {
+        if (Objects.isNull(id)  || StrUtil.isBlank(wxTemplateId)) {
             return null;
         }
         try {
+            // 获取小程序配置
             WxMaService wxMaService = accountUtils.getAccountById(id, WxMaService.class);
-            List<TemplateInfo> templateList = wxMaService.getSubscribeService().getTemplateList();
+            List<TemplateInfo> templateList = null;
+            if (!Objects.isNull(wxMaService)) {
+                // 获取模板列表
+                templateList = wxMaService.getSubscribeService().getTemplateList();
+            }
+            // 根据模板Id获取模板列表中对应模板的详细信息
             return Convert4Amis.getWxMaTemplateParam(wxTemplateId, templateList);
         } catch (Exception e) {
-            log.error("MiniProgramController#queryDetailList fail:{}", Throwables.getStackTraceAsString(e));
+            log.error("WeChatMiniProgramController#queryDetailList fail:{}",
+                                        Throwables.getStackTraceAsString(e));
             throw new CommonException(RespStatusEnum.SERVICE_ERROR);
         }
     }
 
-    /**
-     * 微信小程序登录凭证校验
-     * 【临时给小程序登录使用，正常消息推送平台不会有此接口】
-     * @return openId
-     */
-    @GetMapping("/sync/openid")
-    public String syncOpenId(String code, String appId, String secret) {
-        String url = "https://api.weixin.qq.com/sns/jscode2session?appid=" +
-                appId + "&secret=" + secret + "&js_code=" + code + "&grant_type=authorization_code";
-        return HttpUtil.get(url);
-    }
+//    /**
+//     * 微信小程序登录凭证校验
+//     * 【临时给小程序登录使用，正常消息推送平台不会有此接口】
+//     * @return openId
+//     */
+//    @GetMapping("/sync/openid")
+//    public String syncOpenId(String code, String appId, String secret) {
+//        String url = "https://api.weixin.qq.com/sns/jscode2session?appid=" +
+//                appId + "&secret=" + secret + "&js_code=" + code + "&grant_type=authorization_code";
+//        return HttpUtil.get(url);
+//    }
 }

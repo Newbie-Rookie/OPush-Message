@@ -9,7 +9,7 @@ import com.lin.opush.domain.MessageTemplate;
 import com.lin.opush.domain.TaskInfo;
 import com.lin.opush.domain.sms.MessageTypeConfig;
 import com.lin.opush.dto.account.email.EmailAccount;
-import com.lin.opush.dto.model.EmailContentModel;
+import com.lin.opush.dto.model.email.EmailContentModel;
 import com.lin.opush.enums.ChannelType;
 import com.lin.opush.enums.FlowControlStrategy;
 import com.lin.opush.process.BaseProcessor;

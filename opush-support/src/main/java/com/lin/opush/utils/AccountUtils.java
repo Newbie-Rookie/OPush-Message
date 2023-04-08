@@ -16,18 +16,22 @@ import com.lin.opush.domain.ChannelAccount;
 import com.lin.opush.dto.account.email.EmailAccount;
 import com.lin.opush.dto.account.sms.SmsAccount;
 import com.lin.opush.dto.account.wechat.WeChatMiniProgramAccount;
+import com.lin.opush.dto.account.wechat.WeChatOfficialAccount;
 import com.lin.opush.enums.ChannelType;
 import com.lin.opush.service.ConfigService;
 import com.sun.mail.util.MailSSLSocketFactory;
 import lombok.extern.slf4j.Slf4j;
 import me.chanjar.weixin.common.redis.RedisTemplateWxRedisOps;
+import me.chanjar.weixin.mp.api.WxMpService;
+import me.chanjar.weixin.mp.api.impl.WxMpServiceImpl;
+import me.chanjar.weixin.mp.config.impl.WxMpRedisConfigImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.core.StringRedisTemplate;
 
 import java.util.List;
-import java.util.Optional;
+import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
@@ -61,12 +65,13 @@ public class AccountUtils {
     private StringRedisTemplate stringRedisTemplate;
 
     /**
-     * 保存消息的小程序账号
+     * 保存消息的小程序账号 / 服务号账号
      */
     private ConcurrentMap<ChannelAccount, WxMaService> miniProgramServiceMap = new ConcurrentHashMap<>();
+    private ConcurrentMap<ChannelAccount, WxMpService> officialAccountServiceMap = new ConcurrentHashMap<>();
 
     /**
-     * 封装微信小程序对Redis的相关操作
+     * 封装微信小程序/服务号对Redis的相关操作
      * @return
      */
     @Bean
@@ -148,17 +153,33 @@ public class AccountUtils {
 
     /**
      * 初始化微信小程序【access_token用Redis存储】
-     * @return
+     * @return 微信小程序配置
      */
     private WxMaService initMiniProgramService(WeChatMiniProgramAccount miniProgramAccount) {
         WxMaService wxMaService = new WxMaServiceImpl();
         // 基于Redis存储的微信小程序配置类
         WxMaRedisBetterConfigImpl config = new WxMaRedisBetterConfigImpl(redisTemplateWxRedisOps(),
-                                                ChannelAccountConstant.MINI_PROGRAM_TOKEN_PREFIX);
+                                        ChannelAccountConstant.MINI_PROGRAM_ACCESS_TOKEN_PREFIX);
         config.setAppid(miniProgramAccount.getAppId());
         config.setSecret(miniProgramAccount.getAppSecret());
         wxMaService.setWxMaConfig(config);
         return wxMaService;
+    }
+
+    /**
+     * 初始化微信服务号【access_token用Redis存储】
+     * @return 微信服务号配置
+     */
+    public WxMpService initOfficialAccountService(WeChatOfficialAccount officialAccount) {
+        WxMpService wxMpService = new WxMpServiceImpl();
+        // 基于Redis存储的微信服务号配置类
+        WxMpRedisConfigImpl config = new WxMpRedisConfigImpl(redisTemplateWxRedisOps(),
+                            ChannelAccountConstant.OFFICIAL_ACCOUNT_ACCESS_TOKEN_PREFIX);
+        config.setAppId(officialAccount.getAppId());
+        config.setSecret(officialAccount.getAppSecret());
+        config.setToken(officialAccount.getToken());
+        wxMpService.setWxMpConfigStorage(config);
+        return wxMpService;
     }
 
     /**
@@ -172,18 +193,32 @@ public class AccountUtils {
     @SuppressWarnings("unchecked")
     public <T> T getAccountById(Long sendAccountId, Class<T> clazz) {
         try {
-            Optional<ChannelAccount> optionalChannelAccount = channelAccountDao.findById(Long.valueOf(sendAccountId));
-            if (optionalChannelAccount.isPresent()) {
-                ChannelAccount channelAccount = optionalChannelAccount.get();
-                if (clazz.equals(WxMaService.class)) {
-                    byte[] key = JSONArray.parseObject(config.getProperty(ENCRYPT_AND_DECRYPT_KEY,
-                            CommonConstant.EMPTY_VALUE_JSON_ARRAY), byte[].class);
-                    SymmetricCrypto des = new SymmetricCrypto(SymmetricAlgorithm.DESede, key);
-                    return (T) ConcurrentHashMapUtils.computeIfAbsent(miniProgramServiceMap, channelAccount,
-                            account -> initMiniProgramService(JSON.parseObject(
-                                    des.decryptStr(account.getAccountConfig()), WeChatMiniProgramAccount.class)));
+            ChannelAccount channelAccount = channelAccountDao.findById(sendAccountId).orElse(null);
+            if (Objects.nonNull(channelAccount)) {
+                // 微信小程序和微信服务号相关配置需解码
+                byte[] key = JSONArray.parseObject(config.getProperty(ENCRYPT_AND_DECRYPT_KEY,
+                        CommonConstant.EMPTY_VALUE_JSON_ARRAY), byte[].class);
+                SymmetricCrypto des = new SymmetricCrypto(SymmetricAlgorithm.DESede, key);
+                if (WxMaService.class.equals(clazz)) {
+                    if (ChannelType.WACHAT_MINI_PROGRAM.getCode() == channelAccount.getSendChannel()) {
+                        // 若channelAccount已是该map中的key，则返回对应value
+                        // 不存在则设置key-value【执行函数获取value】
+                        return (T) ConcurrentHashMapUtils.computeIfAbsent(miniProgramServiceMap, channelAccount,
+                                account -> initMiniProgramService(JSON.parseObject(
+                                        des.decryptStr(account.getAccountConfig()), WeChatMiniProgramAccount.class)));
+                    }
+                } else if (WxMpService.class.equals(clazz)) {
+                    if (ChannelType.WACHAT_OFFICIAL_ACCOUNT.getCode() == channelAccount.getSendChannel()) {
+                        return (T) ConcurrentHashMapUtils.computeIfAbsent(officialAccountServiceMap, channelAccount,
+                                account -> initOfficialAccountService(JSON.parseObject(
+                                        des.decryptStr(account.getAccountConfig()), WeChatOfficialAccount.class)));
+                    }
                 } else {
-                    return JSON.parseObject(channelAccount.getAccountConfig(), clazz);
+                    Integer sendChannel = channelAccount.getSendChannel();
+                    if (ChannelType.SMS.getCode() == sendChannel || ChannelType.EMAIL.getCode() == sendChannel) {
+                        return JSON.parseObject(channelAccount.getAccountConfig(), clazz);
+                    }
+                    return JSON.parseObject(des.decryptStr(channelAccount.getAccountConfig()), clazz);
                 }
             }
         } catch (Exception e) {

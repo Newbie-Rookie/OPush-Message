@@ -1,5 +1,6 @@
-package com.lin.opush.dto.model;
+package com.lin.opush.dto.model.sms;
 
+import com.lin.opush.dto.model.ContentModel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -18,7 +19,6 @@ public class SmsContentModel extends ContentModel {
      * 短信发送内容
      */
     private String content;
-
     /**
      * 短信发送链接
      */
