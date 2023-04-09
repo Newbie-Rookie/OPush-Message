@@ -15,8 +15,8 @@ import java.net.URL;
 public class FileUtils {
     /**
      * 读取远程链接返回File对象
-     * @param path      文件路径
-     * @param remoteUrl cdn/oss文件访问链接(远程链接)
+     * @param path 文件路径
+     * @param remoteUrl cdn/oss文件访问链接【远程链接】
      * @return File对象
      */
     public static File getRemoteUrlToFile(String path, String remoteUrl) {
@@ -31,7 +31,8 @@ public class FileUtils {
             }
             return file;
         } catch (Exception e) {
-            log.error("FileUtils#getRemoteUrlToFile fail:{},remoteUrl:{}", Throwables.getStackTraceAsString(e), remoteUrl);
+            log.error("FileUtils#getRemoteUrlToFile fail:{},remoteUrl:{}",
+                            Throwables.getStackTraceAsString(e), remoteUrl);
         }
         return null;
     }

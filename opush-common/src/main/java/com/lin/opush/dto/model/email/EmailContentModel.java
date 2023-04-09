@@ -19,11 +19,15 @@ public class EmailContentModel extends ContentModel {
      */
     private String title;
     /**
-     * 内容(可写入HTML)
+     * 内容【支持HTML】
      */
     private String content;
     /**
-     * 邮件附件链接
+     * 本地附件链接
+     */
+    private String localFilePath;
+    /**
+     * 远程附件链接
      */
     private String url;
 }

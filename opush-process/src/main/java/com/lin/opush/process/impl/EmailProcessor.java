@@ -24,7 +24,14 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
+import java.util.function.Function;
+import java.util.function.IntFunction;
+import java.util.function.Predicate;
+import java.util.stream.Stream;
 
 /**
  * 邮件处理器
@@ -70,22 +77,36 @@ public class EmailProcessor extends BaseProcessor implements Processor {
         // 邮件发送内容模型
         EmailContentModel emailContentModel = (EmailContentModel) taskInfo.getContentModel();
         // 获取不同消息类型的流量配置进行流量负载并发送邮件
-        MessageTypeConfig[] messageTypeConfigs = loadBalanceUtils.loadBalance(loadBalanceUtils.getMessageTypeConfig(taskInfo));
+        MessageTypeConfig[] messageTypeConfigs = loadBalanceUtils.
+                loadBalance(loadBalanceUtils.getMessageTypeConfig(taskInfo));
         for (MessageTypeConfig messageTypeConfig : messageTypeConfigs) {
             // 获取邮件账号配置信息
-            EmailAccount emailAccount = accountUtils.getEmailAccountBySupplierName(messageTypeConfig.getSupplierName(), EmailAccount.class);
+            EmailAccount emailAccount = accountUtils.
+                    getEmailAccountBySupplierName(messageTypeConfig.getSupplierName(), EmailAccount.class);
             try {
-                // 附件(读取远程链接返回File对象)
-                File file = StrUtil.isNotBlank(emailContentModel.getUrl()) ? FileUtils.getRemoteUrlToFile(uploadPath, emailContentModel.getUrl()) : null;
-                // 判断邮件是否带附件
-                String result = Objects.isNull(file) ?
-                        MailUtil.send(emailAccount, taskInfo.getReceiver(), emailContentModel.getTitle(), emailContentModel.getContent(), true) :
-                        MailUtil.send(emailAccount, taskInfo.getReceiver(), emailContentModel.getTitle(), emailContentModel.getContent(), true, file);
+                List<File> unclearExistfiles = new ArrayList<>();
+                // 本地附件
+                unclearExistfiles.add(StrUtil.isNotBlank(emailContentModel.getLocalFilePath()) ?
+                                    new File(emailContentModel.getLocalFilePath()) : null);
+                // 远程附件
+                unclearExistfiles.add(StrUtil.isNotBlank(emailContentModel.getUrl()) ?
+                                    FileUtils.getRemoteUrlToFile(uploadPath, emailContentModel.getUrl()) : null);
+                // 过滤不存在的文件
+                Object[] existfiles = unclearExistfiles.stream()
+                                                        .filter(file -> Objects.nonNull(file) ? true : false)
+                                                        .toArray();
+                // 将Object数组安全转为File数组
+                File[] files = Arrays.asList(existfiles).toArray(new File[0]);
+                // 发送邮件
+                String result = MailUtil.send(emailAccount, taskInfo.getReceiver(),
+                                                emailContentModel.getTitle(),
+                                                emailContentModel.getContent(), true, files);
                 if (StrUtil.isNotBlank(result)) {
                     return true;
                 }
             } catch (Exception e) {
-                log.error("EmailProcessor#realSend fail!{},params:{}", Throwables.getStackTraceAsString(e), taskInfo);
+                log.error("EmailProcessor#realSend fail!{},params:{}",
+                        Throwables.getStackTraceAsString(e), taskInfo);
                 return false;
             }
         }
